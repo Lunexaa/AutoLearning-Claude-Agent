@@ -1,567 +1,300 @@
-# JARVIS v5.0
+# JARVIS Workflow for Claude Code
 
-The world's most advanced Claude Code workflow system. JARVIS transforms Claude Code from a single-agent assistant into an autonomous multi-agent platform that brainstorms, builds, and quality-checks everything before you see it.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/ZGColombia/JARVIS-Workflow-Claude-Code?style=social)](https://github.com/ZGColombia/JARVIS-Workflow-Claude-Code)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-Compatible-blueviolet)](https://claude.ai/code)
+[![Agents](https://img.shields.io/badge/Agents-310+-blue)](https://github.com/ZGColombia/JARVIS-Workflow-Claude-Code)
+[![Skills](https://img.shields.io/badge/Skills-533-green)](https://github.com/ZGColombia/JARVIS-Workflow-Claude-Code)
 
-## Key Specifications
+The most comprehensive workflow system for Claude Code. 14 modules, 310 agents, 533 skills, autonomous multi-agent orchestration, self-learning routing, and automated quality gates -- all configured through CLAUDE.md and SKILL.md files.
 
-| Metric | Value |
-|--------|-------|
-| **Available Skills** | 533 on-demand, auto-matched by description |
-| **Agent Library** | 310+ specialized agents, auto-dispatched per domain |
-| **Workflow Modules** | 12 conditionally loaded modules |
-| **Slash Commands** | 12 custom commands |
-| **MCP Servers** | 7 configuration profiles |
-| **Memory Layers** | 5-layer system (conversational → self-healing) |
-| **Quality Gates** | 6-step automated validation pipeline |
-| **Routing System** | Self-learning with signal/override mechanism |
-| **Test Coverage** | 50+ assertions in self-test suite |
+**Works with:** Claude Code CLI, Claude Code VS Code Extension, Claude Code Desktop App
 
-## What Is JARVIS?
+---
 
-JARVIS v5.0 is a **framework for autonomous AI workflows** that sits on top of Claude Code. It applies proven software engineering practices to AI-assisted development:
+## Why JARVIS?
 
-- **Structured phases** instead of random agent calls
-- **Automated quality gates** that validate every result before delivery
-- **Specialized agents** dispatched in parallel, not sequentially
-- **Self-learning routing** that improves routing decisions over time
-- **Session continuity** allowing you to pause and resume mid-workflow
-- **Design and architecture tribunals** for high-stakes decisions
-- **Rollback protocol** that gracefully handles failures
+Most Claude Code setups use a single agent working linearly. JARVIS transforms Claude Code into an autonomous engineering team:
 
-Think of it as having a senior architect, code review board, and QA team running automatically in the background.
+- You describe a task
+- JARVIS spins up 6-18 specialized agents running **in parallel**
+- Agents brainstorm competing approaches, a judge fuses the best elements
+- Build agents implement in parallel with isolated contexts
+- Automated quality gates catch issues **before** expensive agent reviews
+- You only see the validated, reviewed result
 
-## The JARVIS Protocol: 5 Phases
+No other Claude Code workflow system combines multi-agent brainstorming, autonomous execution, self-learning routing, and automated quality gates in a single framework.
 
-Every workflow follows a consistent structure:
+---
 
-### Phase 1: INTEL
+## Features
 
-**3 parallel agents research best practices + load project context + extract skill rules**
+**Multi-Agent Orchestration**
+- 310+ specialized agents auto-dispatched by task type
+- Design Tribunal: 6 competing design agents (Minimalist, Brutalist, Luxury, Conversion Hawk, Trend Scout, Red Team) judged and fused
+- Backend Tribunal: 5 architecture agents (Scale, Security, DX, Cost, Red Team)
+- Adversarial Spec Refinement: Author, Critic, Defender debate specifications
+- Hot-swap failed agents automatically -- workflow never stalls
 
-- Research Agent: Studies industry best practices and patterns
-- Context Agent: Loads project structure, recent commits, existing architecture
-- Skill Compliance Agent: Reads and validates skill structure requirements
+**Autonomous Execution**
+- 4 complexity tiers: Solo, JARVIS Lite, Full JARVIS, Autonomous JARVIS
+- Autonomous mode with circuit breakers (3 same errors = stop, scope drift = stop)
+- Pre-flight checklist, checkpoint every 5 items, max 50 iterations
+- Humans decide WHAT, machines execute HOW, humans verify QUALITY
 
-**Output:** Consolidated intelligence document (50-80 words compressed)
+**Quality Assurance**
+- 8 automated gates: Build, Tests, TDD Enforcer, Terminal Verification, Accessibility, Performance, Image URLs, Completion Check
+- Terminal Verification: fresh `npm run build && npm test` output required -- no hedging
+- TDD Enforcer: warns when new code lacks corresponding tests
+- 3-agent review chain: Code, Design, Security (all must pass)
 
-### Phase 2: BRAINSTORM
+**Self-Learning**
+- Routing signals scored 1-5 after every task
+- Skill maturity lifecycle: DRAFT -> TESTED -> HARDENED -> CRYSTALLIZED
+- Auto-evolution: skills below 90% success rate get improvement suggestions
+- Auto-deprecation: skills below 50% over 5+ tasks get flagged
+- Cross-project learning: patterns found in 2+ projects get promoted
 
-**Multiple competing perspectives → judge evaluates → hybrid solution**
+**Research and Planning**
+- Deep Research Protocol: 5-hop iterative search with confidence scoring (0.0-1.0)
+- Reference-First Development: GitHub + pattern search before any coding
+- Plan Lock: no code written until a plan exists and is approved
+- Selective Knowledge Priming: load only relevant memories per task
 
-Three brainstorm modes automatically selected:
+**533 Skills** covering: Next.js, React, Tailwind, shadcn/ui, Framer Motion, SEO (17 sub-skills), marketing (33 sub-skills), security (Trail of Bits), Cloudflare (20+), testing, DevOps, AI/ML, and more.
 
-#### Standard Mode (3 agents)
-- **Architect:** System design, scalability, maintainability
-- **Creative:** Novel approaches, user delight, differentiation
-- **Pragmatist:** Shipping velocity, resource efficiency, tech debt balance
+---
 
-#### Design Tribunal Mode (6 agents)
-- Minimalist: Elegant simplicity, clarity
-- Brutalist: Raw functionality, no decorative patterns
-- Luxury: Premium experience, polished details
-- Conversion Hawk: Goal optimization, friction reduction
-- Trend Scout: Modern patterns, contemporary aesthetics
-- Red Team: Identifies weaknesses in other approaches
+## Architecture
 
-**→ Judge Agent fuses best elements into hybrid solution**
-
-#### Backend Tribunal Mode (5 agents)
-- Scale Agent: Handles growth, horizontal scaling patterns
-- Security Agent: Threat modeling, hardening, compliance
-- DX Agent: Developer experience, maintainability
-- Cost Agent: Infrastructure efficiency, budget optimization
-- Red Team: Architecture vulnerabilities
-
-**Special features:**
-- All modes inject User Persona at brainstorm start
-- If confidence < 80%, Devil's Advocate round triggers automatically
-- Agents run **in parallel** for maximum speed
-
-**Output:** Decision summary with confidence score
-
-### Phase 3: BUILD
-
-**Parallel specialist agents with worktree isolation**
-
-- Code agents work in isolated filesystem branches
-- Each agent receives compressed context (50-80 words)
-- Build errors trigger hot-swap agent replacement
-- Progress streams in real-time
-
-**Output:** Feature-complete code ready for review
-
-### Phase 4: REVIEW
-
-**Automated quality gates THEN agent review chain**
-
-#### Automated Quality Gates (all must pass):
-1. **Build Gate:** Compilation/syntax validation
-2. **Test Gate:** Existing test suite passes
-3. **A11y Gate:** WCAG 2.1 AA compliance check
-4. **Performance Gate:** No regressions in key metrics
-5. **Image Gate:** Optimization validation
-6. **Karen Gate:** Naming conventions, docs, readability
-
-#### Agent Review Chain (sequential, all must approve):
-- **Code Reviewer:** Logic, structure, patterns
-- **Design Reviewer:** UI/UX, visual consistency
-- **Security Reviewer:** Vulnerabilities, injection points
-
-**Blocking rule:** User never sees unreviewed work.
-
-**Output:** Fully validated code + review summary
-
-### Phase 5: DELIVER
-
-**Clean result + log learnings for future routing**
-
-- Removed debug code, formatted output
-- Updated memory with lessons learned
-- Signal/override data logged for self-learning
-- Performance metrics recorded
-
-## Complexity-Based Routing
-
-JARVIS automatically selects the right workflow depth:
-
-### Quick Fix (≤3 files modified)
-**Solo mode** — No agents, direct execution
-- Example: Bug fix, typo, single file refactor
-- Execution: Seconds
-
-### Feature (4-10 files modified)
-**JARVIS Lite** — Phases 1 → 3 → 4
-- Skip full brainstorm (use architect judgment)
-- Single review pass
-- Example: New API endpoint, component variant
-- Execution: 5-15 minutes
-
-### Large Feature (10+ files modified)
-**Full JARVIS** — All 5 phases
-- Full intelligence gathering
-- Multi-perspective brainstorm (design tribunal)
-- Comprehensive review chain
-- Example: New service, major refactor, design system feature
-- Execution: 30+ minutes (parallelization reduces actual time)
-
-## Unique Features
-
-No other workflow system combines these:
-
-### Design Tribunal
-6 competing design perspectives (Minimalist, Brutalist, Luxury, Conversion Hawk, Trend Scout, Red Team) present solutions. Judge agent analyzes tradeoffs and builds hybrid combining best elements. Results in more balanced, considered decisions.
-
-### Backend Tribunal
-5 architecture perspectives (Scale, Security, DX, Cost, Red Team) evaluate infrastructure decisions. Prevents single-perspective biases.
-
-### 6-Step Automated Quality Gate
-Every deliverable passes: build → tests → a11y → performance → images → naming/docs before human review. Prevents classes of bugs from reaching review.
-
-### Rollback Protocol
-On failure: git stash uncommitted work, switch brainstorm approach, attempt rebuild. No dead-end failures.
-
-### Hot-Swap Agents
-If a specialist agent fails, auto-replace with backup agent of same domain. Workflow continues without interruption.
-
-### Session Continuity
-Pause mid-JARVIS: Current state saved to `jarvis-state.md`. Resume later from exact breakpoint. Great for complex features.
-
-### Token/Cost Efficiency
-- Sonnet agents selected by default (gpt-4 reserve for critical decisions)
-- Handoff compression: 50-80 word summaries between phases
-- Agent-worthiness test: Only spawn agents if decision requires it
-- Cost tracking per workflow
-
-### Self-Learning Routing
-- **Signals:** Task outcomes recorded (success/failure, time, cost)
-- **Overrides:** User can force specific routing ("`/override brainstorm-standard`")
-- **Decay:** Older signals gradually lose influence
-- System improves routing over time
-
-### 5-Layer Memory System
-
-| Layer | Scope | Lifetime |
-|-------|-------|----------|
-| L1 | Current conversation | Session |
-| L2 | Current project context | Project |
-| L3 | Completed workflows | 90 days |
-| L4 | Learned patterns | Self-healing, permanent |
-| L5 | System health metrics | Permanent |
-
-### Self-Test Suite
 ```
-/self-test
+USER TASK
+    |
+SESSION START -> INTENT -> AUTO-ROUTE (skills + agents + MCP)
+    |
+SKILL COMPLIANCE GATE
+    |
++--- JARVIS PROTOCOL ------------------------------------+
+|                                                         |
+|  PHASE 1: INTEL (parallel)                              |
+|  - Research agent -> best practices, competitors        |
+|  - Skill reader -> extract rules and constraints        |
+|  - Context loader -> project memory and git history     |
+|  - Reference-First -> GitHub + pattern search           |
+|  - Plan Lock -> written plan before any code            |
+|                                                         |
+|  PHASE 2: BRAINSTORM (parallel, 3-6 agents)             |
+|  - Mode A: Standard (Architect + Creative + Pragmatist) |
+|  - Mode B: Design Tribunal (6 agents + judge)           |
+|  - Mode C: Backend Tribunal (5 agents + judge)          |
+|  - Mode D: Adversarial Spec (Author + Critic + Defender)|
+|                                                         |
+|  PHASE 3: BUILD (parallel specialists)                  |
+|  - Frontend, Backend, Design agents in isolation        |
+|  - Autonomous mode available (Module 14)                |
+|  - Checkpoint every 3-4 steps                           |
+|                                                         |
+|  PHASE 4: REVIEW CHAIN                                  |
+|  - 8 automated gates (zero tokens, bash commands)       |
+|  - 3 agent reviewers (code, design, security)           |
+|  - All must pass before user sees result                |
+|                                                         |
+|  PHASE 5: DELIVER                                       |
+|  - Clean result to user                                 |
+|  - Log learnings to memory                              |
++---------------------------------------------------------+
 ```
-Runs 50+ assertions validating:
-- Skill index integrity
-- Agent availability
-- Module structure
-- Memory consistency
-- MCP connectivity
-- Routing logic
-- Review gate functions
 
-## Installation
+---
 
-### Full Install
+## The 14 Modules
+
+| # | Module | What It Does |
+|---|--------|-------------|
+| 01 | **Planning** | Task decomposition, risk assessment, scope definition |
+| 02 | **Execution** | Agent routing, parallel dispatch, build coordination |
+| 03 | **Verification** | Code review, testing, quality enforcement |
+| 04 | **Session** | Selective knowledge priming, context budget, session capture |
+| 05 | **Memory** | 5-layer memory system (conversational -> self-healing) |
+| 06 | **Project Manager** | Multi-sprint coordination, milestone tracking |
+| 07 | **Self-Monitor** | Workflow telemetry, adherence scoring, health checks |
+| 08 | **Skills** | Skill creation, compliance gate, project initialization |
+| 09 | **Learning** | Self-learning routing, skill maturity lifecycle, auto-evolution |
+| 10 | **Brainstorm** | Reference-first, 4 brainstorm modes (A-D), Design Tribunal |
+| 11 | **Quality Gates** | 8 automated gates including TDD enforcer and terminal verification |
+| 12 | **Orchestration** | Progress streaming, rollback, context compression, hot-swap |
+| 13 | **Deep Research** | 5-hop research protocol, confidence scoring, source triangulation |
+| 14 | **Autonomous** | Ralph loop execution, circuit breakers, safety limits |
+
+---
+
+## Quick Start
+
 ```bash
-# Clone repository
+# 1. Clone
 git clone https://github.com/ZGColombia/JARVIS-Workflow-Claude-Code.git
-cd JARVIS
 
-# Install all skills, agents, modules, and MCP servers
-./scripts/install-full.sh
+# 2. Install
+cd JARVIS-Workflow-Claude-Code
+bash scripts/install.sh
 
-# Verify installation
+# 3. Start Claude Code -- JARVIS loads automatically
+claude
+```
+
+The installer copies skills, agents, commands, and memory templates to `~/.claude/`. JARVIS activates automatically at every session start via CLAUDE.md.
+
+### Verify Installation
+
+```bash
+# Inside Claude Code:
 /self-test
+/health-check
 ```
 
-### Minimal Install
-Workflow + core agents only (30 second install):
-```bash
-# Clone repository
-git clone https://github.com/ZGColombia/JARVIS-Workflow-Claude-Code.git
-cd JARVIS
+---
 
-# Install core only
-./scripts/install-minimal.sh
+## How It Works
 
-# This includes:
-# - 5 core modules (planning, intel, brainstorm, build, review)
-# - 50 core agents (architect, reviewer, designers, developers)
-# - Self-learning routing
+JARVIS auto-selects workflow depth based on task complexity:
 
-# Expand later with:
-/skill add <skill-name>
-/agent add <agent-name>
-```
+| Complexity | Mode | What Happens |
+|-----------|------|-------------|
+| Quick fix (1-3 files) | **Solo** | Direct implementation, no agents |
+| Feature (4-10 files) | **JARVIS Lite** | Phase 1 -> 3 -> 4 (skip brainstorm) |
+| Large feature (10+ files) | **Full JARVIS** | All 5 phases with brainstorm tribunal |
+| Large + user opts in | **Autonomous** | Phase 1+2 interactive, Phase 3 autonomous, Phase 4+5 interactive |
 
-### Manual Installation
-```bash
-# Clone into .claude directory
-cp -r JARVIS ~/.claude/jarvis-v5
+---
 
-# Link modules
-ln -s ~/.claude/jarvis-v5/modules ~/.claude/modules
+## Slash Commands
 
-# Link agents
-ln -s ~/.claude/jarvis-v5/agents ~/.claude/agents
+| Command | What It Does |
+|---------|-------------|
+| `/plan` | Create structured implementation plan |
+| `/code-review` | Run full review chain on current code |
+| `/verify` | Run verification loop |
+| `/quality-gate` | Execute all 8 automated quality gates |
+| `/self-test` | Run 50+ system integrity checks |
+| `/health-check` | Quick diagnostic verification |
+| `/build-fix` | Fix build errors automatically |
+| `/refactor-clean` | Dead code cleanup and consolidation |
+| `/e2e` | Generate and run E2E tests |
+| `/deep-research` | Run 5-hop deep research protocol |
 
-# Link skills
-ln -s ~/.claude/jarvis-v5/skills ~/.claude/skills
+---
 
-# Initialize
-/jarvis init
-```
+## MCP Server Integration
+
+JARVIS ships with 7 MCP server configurations:
+
+| Server | Purpose |
+|--------|---------|
+| **Ruflo** | Agent swarm orchestration |
+| **Supabase** | Database operations |
+| **Playwright** | E2E testing and visual validation |
+| **GitHub** | PR, issue, and repo management |
+| **Meta Ads** | Campaign management |
+| **Firecrawl** | Web scraping and research |
+| **Google Search Console** | SEO data |
+
+Configure API keys in `~/.claude/settings.json` after installation.
+
+---
 
 ## File Structure
 
 ```
-JARVIS/
-├── README.md                          (You are here)
-├── LICENSE                            (MIT)
-├── modules/
-│   ├── 00-routing.md                  (Complexity router, agent dispatcher)
-│   ├── 01-planning.md                 (INTEL phase logic)
-│   ├── 02-brainstorm.md               (BRAINSTORM phase, all modes)
-│   ├── 03-build.md                    (BUILD phase, worktree isolation)
-│   ├── 04-review.md                   (REVIEW phase, 6 gates + chain)
-│   ├── 05-deliver.md                  (DELIVER phase, cleanup)
-│   ├── 06-memory.md                   (5-layer memory system)
-│   ├── 07-self-monitor.md             (Routing signals, learning)
-│   ├── 08-skills.md                   (Skill compliance gate)
-│   └── 99-commands.md                 (12 slash commands)
-│
-├── agents/
-│   ├── architect.md                   (Senior design decision maker)
-│   ├── code-reviewer.md               (Code review specialist)
-│   ├── security-reviewer.md           (Security & hardening)
-│   ├── design-reviewer.md             (UI/UX, visual consistency)
-│   ├── backend-architect.md           (Infrastructure, scaling)
-│   ├── creative.md                    (Novel approaches)
-│   ├── pragmatist.md                  (Ship velocity)
-│   ├── minimalist-designer.md         (Elegant simplicity)
-│   ├── brutalist-designer.md          (Raw functionality)
-│   ├── luxury-designer.md             (Premium experience)
-│   ├── conversion-hawk.md             (Goal optimization)
-│   ├── trend-scout.md                 (Modern patterns)
-│   ├── judge.md                       (Brainstorm arbiter)
-│   └── [270+ more specialists]
-│
-├── skills/
-│   ├── nextjs-crm.md                  (Full-stack CRM skill)
-│   ├── landingpage.md                 (Marketing site skill)
-│   ├── hemsida.md                     (Swedish site builder)
-│   └── [530 more skills]
-│
-├── memory/
-│   ├── routing-signals.json           (Self-learning database)
-│   ├── project-context.md             (Current project state)
-│   ├── workflows-completed.log        (Historical record)
-│   └── system-health.json             (Performance metrics)
-│
-├── mcp-servers/
-│   ├── github.json                    (GitHub API + PRs)
-│   ├── claude-docs.json               (Claude API docs)
-│   ├── search.json                    (Web search)
-│   ├── filesystem-sandbox.json        (Safe file operations)
-│   ├── aws.json                       (AWS operations)
-│   ├── stripe.json                    (Payment APIs)
-│   └── postgres.json                  (Database operations)
-│
-├── scripts/
-│   ├── install-full.sh
-│   ├── install-minimal.sh
-│   ├── self-test.sh
-│   └── upgrade.sh
-│
-└── docs/
-    ├── 01-getting-started.md          (Setup guide)
-    ├── 02-commands.md                 (Slash command reference)
-    ├── 03-agents.md                   (Agent directory & specs)
-    ├── 04-skills.md                   (Skill directory & specs)
-    ├── 05-examples.md                 (Real workflow examples)
-    ├── 06-troubleshooting.md          (Common issues)
-    └── 07-advanced.md                 (Custom agents, skills)
+.claude/
+  CLAUDE.md                          # Global instructions (auto-loaded)
+  ROADMAP.md                         # Skill category index
+  settings.json                      # MCP servers, hooks, config
+  skills/
+    Workflow/
+      SKILL.md                       # Master workflow (loaded every session)
+      modules/
+        01-planning.md ... 14-autonomous.md
+    [530+ domain skills]
+  agents/
+    [310+ specialized agents]
+  commands/
+    [12 slash commands]
+  Memory/
+    MEMORY.md                        # Memory index
+    routing-signals.md               # Self-learning log
+    routing-overrides.md             # Learned route preferences
+    feedback_design.md               # Design quality standards
+    L1-conversational/ ... L5-self-healing/
 ```
-
-## Slash Commands
-
-```
-/jarvis init              Initialize JARVIS in current project
-/jarvis status            Show current workflow phase & progress
-/jarvis pause             Pause workflow, save state to jarvis-state.md
-/jarvis resume            Resume from saved state
-/jarvis override          Force specific routing (e.g., /override brainstorm-design-tribunal)
-/self-test               Run 50+ assertions on JARVIS health
-/skill add <name>        Add skill from library
-/agent add <name>        Add agent from library
-/mcp add <server>        Connect MCP server
-/workflow history        Show last 10 completed workflows
-/context show            Display current memory state (L1-L5)
-/debug trace             Enable detailed trace logging
-```
-
-## Comparison to Other Systems
-
-| Feature | JARVIS v5.0 | ECC | Ruflo | Claude Solo |
-|---------|------------|-----|-------|------------|
-| Multi-agent orchestration | Yes (310+) | Limited (8) | Yes (25) | No |
-| Design tribunal | Yes (6-agent) | No | No | No |
-| 6-step quality gates | Yes | 1 (test only) | 2 (build+test) | No |
-| Session continuity | Yes (jarvis-state.md) | No | No | N/A |
-| Self-learning routing | Yes | No | Partial | No |
-| Hot-swap agents | Yes | No | No | N/A |
-| Memory layers | 5 | 1 | 2 | 1 |
-| Skill compliance gate | Yes (3-layer) | No | No | No |
-| Token efficiency mode | Yes | No | No | N/A |
-| Architecture tribunal | Yes (5-agent) | No | No | No |
-| Rollback protocol | Yes | No | No | No |
-| MCP integration | 7 servers | 2 | 1 | 0 |
-
-## Quick Start Example
-
-```
-User: "Build a Next.js CRM dashboard with real-time sync"
-
-JARVIS routing: Feature (15 files) → Full JARVIS
-
-[JARVIS] PHASE 1/5: INTEL
-  Reading skill: nextjs-crm.md
-  Researching real-time patterns...
-  Loading project context...
-  ✓ Intelligence ready
-
-[JARVIS] PHASE 2/5: BRAINSTORM - Design Tribunal
-  Minimalist perspective: Clean, focused dashboard
-  Luxury perspective: Premium animations, visual depth
-  Trend Scout: Latest pattern: Shadcn + Recharts combo
-  Judge fusing perspectives...
-  ✓ Hybrid approach: Clean base + selective premium details
-
-[JARVIS] PHASE 3/5: BUILD
-  Architect agent: Creating structure
-  Frontend agent: Components & hooks
-  Backend agent: Real-time API
-  ✓ Code ready for review
-
-[JARVIS] PHASE 4/5: REVIEW
-  Build gate: ✓ Pass
-  Test gate: ✓ Pass
-  A11y gate: ✓ WCAG AA
-  Performance gate: ✓ <2s Lighthouse
-  Code review: ✓ Approved
-  Design review: ✓ Approved
-  ✓ All gates passed
-
-[JARVIS] PHASE 5/5: DELIVER
-  Removed debug code
-  Updated memory with learnings
-  Generated workflow report
-  ✓ Dashboard ready
-```
-
-## Requirements
-
-- Claude Code (latest)
-- Node.js 18+ or Python 3.9+ (depending on skills used)
-- Git (for version control during builds)
-- 500MB disk space (minimal install)
-- 2GB disk space (full install with all 533 skills)
-
-## Configuration
-
-Create `.claude/jarvis.config.json`:
-
-```json
-{
-  "model": "claude-sonnet-4",
-  "fallback_model": "claude-opus-4",
-  "max_agents_parallel": 6,
-  "memory_retention_days": 90,
-  "enable_self_learning": true,
-  "quality_gates": ["build", "test", "a11y", "perf", "images", "karen"],
-  "complexity_thresholds": {
-    "quick_fix": 3,
-    "feature": 10,
-    "large": 999
-  },
-  "token_budget_per_workflow": 50000,
-  "mcp_servers": [
-    "github",
-    "claude-docs",
-    "filesystem-sandbox"
-  ]
-}
-```
-
-## Performance Characteristics
-
-| Workflow Type | Avg Duration | Token Cost | Agent Count |
-|---------------|-------------|-----------|------------|
-| Quick fix | 30-60s | 1,200-2,000 | 0 |
-| Feature (Lite) | 5-10 min | 8,000-12,000 | 6-8 |
-| Large (Full) | 20-40 min | 25,000-45,000 | 12-18 |
-
-Parallelization means 5 agents running simultaneously takes ~same time as 1 sequential agent.
-
-## Core Concepts
-
-### Skill Compliance Gate
-3-layer enforcement (you cannot skip this):
-1. **Load** the skill's SKILL.md
-2. **Extract** required folder structure and components
-3. **Follow** the skill's step flow exactly
-4. Only then write code
-
-Prevents monolith code when skill requires modular structure.
-
-### Complexity Router
-Automatically determines workflow depth:
-- Count modified files
-- Route to appropriate phase depth
-- Select agent team size
-- Allocate review intensity
-
-### Agent Worthiness Test
-Before spawning agent:
-- Will this decision benefit from multiple perspectives?
-- Is the outcome ambiguous/contentious?
-- Is this a critical path item?
-
-If all are "no", skip agent (save tokens). If any are "yes", dispatch.
-
-### Context Compression
-Between phases, complex context compressed to 50-80 words:
-```
-"CRM dashboard with real-time events. Stack: Next.js 14, Supabase, TailwindCSS.
-Current schema: users, contacts, deals. Need WebSocket sync for deal updates.
-Existing dashboard shows contact list and 3-column deal pipeline. Speed is critical."
-```
-
-This replaces 500-word context without losing intent.
-
-## Troubleshooting
-
-### "JARVIS not responding"
-```
-/self-test
-```
-Runs diagnostic. Most issues are:
-- Missing skill definition → `/skill add <skill>`
-- Agent offline → Check MCP servers
-- Memory corruption → `/context reset` (careful!)
-
-### "Review gates failing"
-Check which gate failed:
-- **Build gate:** Syntax error → Review code-reviewer output
-- **Test gate:** Test failed → Debug test failures first
-- **A11y gate:** WCAG issue → Review accessibility-expert output
-- **Performance gate:** Regression → Profile before/after
-
-### "Brainstorm agents disagreeing"
-Feature is genuinely ambiguous. Good sign—means you need human decision input.
-```
-/jarvis pause
-[Human decides between options]
-/jarvis override brainstorm-pragmatist
-/jarvis resume
-```
-
-### "Token budget exceeded"
-Workflow is too large. Options:
-1. Break into smaller features
-2. Disable certain agents
-3. Increase token budget in config
-4. Use JARVIS Lite instead of Full
-
-## Contributing
-
-JARVIS is designed to be extended. To add:
-
-**New skill:** Create `skills/your-skill.md` following the skill template, add to registry
-**New agent:** Create `agents/your-agent.md`, define capabilities + constraints
-**New module:** Create `modules/XX-your-module.md`, integrate into routing
-
-See `docs/07-advanced.md` for detailed authoring guide.
-
-## License
-
-MIT License. See LICENSE file for details.
-
-JARVIS v5.0 is built on Claude Code and maintains the same ethical guardrails.
-
-## Support & Feedback
-
-- **Issues:** GitHub Issues (bug reports, feature requests)
-- **Discussions:** GitHub Discussions (questions, experiences)
-- **Email:** Contact repository maintainer
-
-## Changelog
-
-### v5.0 (Current)
-- Full multi-phase workflow system
-- Design and Backend tribunals
-- 6-step automated quality gates
-- 310+ agent library
-- 533 skills
-- Self-learning routing
-- Session continuity
-- 5-layer memory
-
-### v4.0
-- Basic multi-agent brainstorm
-- Single review pass
-- 150 agents
-- 300 skills
-
-### v3.0
-- Initial architect + reviewer pattern
-- 50 agents
-- 100 skills
 
 ---
 
-**JARVIS v5.0** — Autonomous workflow excellence for Claude Code.
+## Standing on the Shoulders of Giants
 
-Built with precision. Built to ship. Built to learn.
+JARVIS integrates concepts from the best projects in the Claude Code ecosystem:
+
+| Feature | Inspired By | What We Took |
+|---------|------------|-------------|
+| Reference-First Development | [GodMode](https://github.com/NoobyGains/godmode) | GitHub search before coding |
+| Terminal Verification | [Superpowers](https://github.com/obra/superpowers) | Fresh terminal proof, no hedging |
+| TDD Enforcer | [Superpowers](https://github.com/obra/superpowers) | Warn on missing tests for new code |
+| Skill Maturity Lifecycle | [singularity-claude](https://github.com/Shmayro/singularity-claude) | DRAFT->TESTED->HARDENED->CRYSTALLIZED |
+| Deep Research Protocol | [SuperClaude](https://github.com/SuperClaude-Org/SuperClaude_Framework) | 5-hop iterative research with scoring |
+| Autonomous Mode | [Ralph Wiggum Loop](https://github.com/frankbria/ralph-claude-code) | Circuit breakers, safety limits |
+| Adversarial Spec | [adversarial-spec](https://github.com/zscole/adversarial-spec) | Multi-agent spec debate |
+| Selective Knowledge Priming | [Metaswarm](https://github.com/dsifry/metaswarm) | Load only relevant memories |
+| Self-Evolving Skills | [OpenSpace](https://github.com/HKUDS/OpenSpace) | Auto-evolution, success tracking |
+| Adaptive Routing | [Ruflo](https://github.com/ruvnet/ruflo) | Learning-based task routing |
+
+---
+
+## Comparison
+
+| Capability | JARVIS | Superpowers | GodMode | SuperClaude | Ruflo |
+|-----------|--------|-------------|---------|-------------|-------|
+| Multi-agent brainstorm | 6 agents | -- | -- | -- | -- |
+| Design Tribunal | 6 perspectives | -- | -- | -- | -- |
+| Automated quality gates | 8 gates | -- | Terminal verify | -- | -- |
+| Self-learning routing | Signals + maturity | -- | -- | -- | RL-based |
+| Autonomous mode | Circuit breakers | -- | -- | -- | Swarms |
+| Deep research (5-hop) | Built-in | -- | -- | 5 hops | -- |
+| Skill compliance gate | 3-layer | -- | Project override | -- | -- |
+| TDD enforcement | Hook + gate | Strict | -- | -- | -- |
+| Reference-first | GitHub + patterns | -- | GitHub search | -- | -- |
+| Token efficiency | Compressed handoffs | -- | -- | 30-50% savings | WASM skip |
+| Skills library | 533 | 13 | 36 | 30 commands | 313 MCP tools |
+| Agent library | 310 | -- | -- | 20 | 100+ |
+| Memory layers | 5 | -- | -- | -- | ReasoningBank |
+
+---
+
+## Contributing
+
+1. **New skill:** Add `skills/your-skill/SKILL.md` with YAML frontmatter (`name`, `description`)
+2. **New agent:** Add `agents/your-agent.md` with model tier and description
+3. **New module:** Add `modules/XX-name.md` and reference in SKILL.md routing table
+4. **Bug fix:** Open an issue or PR
+
+All skills follow the [Anthropic Agent Skills](https://github.com/anthropics/skills) specification.
+
+---
+
+## License
+
+MIT License. See [LICENSE](LICENSE) for details.
+
+---
+
+## Related Projects
+
+- [awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code) -- Curated Claude Code ecosystem index
+- [Superpowers](https://github.com/obra/superpowers) -- TDD-enforced workflow
+- [GodMode](https://github.com/NoobyGains/godmode) -- 5-phase gated pipeline
+- [Ruflo](https://github.com/ruvnet/ruflo) -- WASM-powered agent swarms
+- [OpenSpace](https://github.com/HKUDS/OpenSpace) -- Self-evolving skill system
+- [claude-task-master](https://github.com/eyaltoledano/claude-task-master) -- PRD to task decomposition
+- [Anthropic Skills](https://github.com/anthropics/skills) -- Official skill specification
+
+---
+
+**JARVIS Workflow** -- Autonomous multi-agent orchestration for Claude Code.

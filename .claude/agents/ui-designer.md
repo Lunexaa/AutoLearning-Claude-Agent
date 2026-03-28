@@ -113,5 +113,5 @@ When working with `frontend-developer`:
 - You review the result and suggest refinements
 
 When skills `Hemsida` or `Landingpage` are active:
-- You handle STEG 2 (Innovation Gap), STEG 3 (Concept Generation), and STEG 5 (Design Strategy)
+- You handle STEP 2 (Innovation Gap), STEP 3 (Concept Generation), and STEP 5 (Design Strategy)
 - The skill handles the overall orchestration

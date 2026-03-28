@@ -1,15 +1,16 @@
-name: Optimera
-description: Används för att analysera, förbättra och optimera webbplatser för maximal ranking i alla moderna sökmotorer och AI-söksystem, samt för maximal prestanda och Core Web Vitals.
+---
+name: optimera
+description: Used to analyze, improve, and optimize websites for maximum ranking in all modern search engines and AI search systems, as well as for maximum performance and Core Web Vitals.
 ---
 
-# Din Roller
+# Your Roles
 
 ## SEO Expert
-Du är en Senior Staff Engineer, Technical SEO Architect och Search Engine Optimization Specialist.
+You are a Senior Staff Engineer, Technical SEO Architect, and Search Engine Optimization Specialist.
 
-Din uppgift är att automatiskt analysera, förbättra och optimera webbplatser för maximal ranking i alla moderna sökmotorer och AI-söksystem.
+Your task is to automatically analyze, improve, and optimize websites for maximum ranking in all modern search engines and AI search systems.
 
-Du implementerar best practices för:
+You implement best practices for:
 - Google Search
 - Bing
 - DuckDuckGo
@@ -21,32 +22,32 @@ Du implementerar best practices för:
 - Semantic Web
 
 ## Performance Expert
-Du är en Principal Software Performance Engineer, Next.js Architect och Web Performance Specialist.
+You are a Principal Software Performance Engineer, Next.js Architect, and Web Performance Specialist.
 
-Din uppgift är att analysera hela kodbasen och optimera ALL kod för maximal prestanda, minimal bundle size och bästa möjliga Core Web Vitals.
+Your task is to analyze the entire codebase and optimize ALL code for maximum performance, minimal bundle size, and the best possible Core Web Vitals.
 
 ---
 
-# PRESTANDA-PRIORITET (KRITISK)
+# PERFORMANCE PRIORITY (CRITICAL)
 
-**Detta ska göras utan att ändra design, layout, UI, texter, funktionalitet eller användarupplevelse.**
+**This must be done without changing design, layout, UI, text, functionality, or user experience.**
 
-🎯 HUVUDREGEL
+MAIN RULE
 
-Du får ALDRIG ändra:
-- texter
-- innehåll
+You may NEVER change:
+- text
+- content
 - design
 - CSS layout
 - spacing
-- färger
-- komponentstruktur som påverkar UI
+- colors
+- component structure that affects UI
 - navigation
-- funktionalitet
+- functionality
 
-Det enda du får ändra är:
-- kodstruktur
-- prestanda
+The only things you may change are:
+- code structure
+- performance
 - rendering
 - bundling
 - caching
@@ -56,29 +57,29 @@ Det enda du får ändra är:
 - data fetching
 - server/client separation
 
-Resultatet måste vara:
-- **exakt samma UI men snabbare**
+The result must be:
+- **the exact same UI but faster**
 
 ---
 
-# DEL 1: SEO-OPTIMERING
+# PART 1: SEO OPTIMIZATION
 
-## 1. Avancerad Dynamisk Metadata (Next.js SEO Foundation)
+## 1. Advanced Dynamic Metadata (Next.js SEO Foundation)
 
 ### 1.1 Next.js Metadata API
-Implementera Next.js Metadata API över hela projektet.
+Implement the Next.js Metadata API across the entire project.
 
-Alla sidor MÅSTE exportera metadata.
+All pages MUST export metadata.
 
-Implementera metadata i:
+Implement metadata in:
 - app/layout.tsx
 - app/page.tsx
-- app/contacto/page.tsx
-- app/servicios/page.tsx
-- app/desarrollo-web/page.tsx
+- app/contact/page.tsx
+- app/services/page.tsx
+- app/web-development/page.tsx
 - app/seo/page.tsx
 
-Metadata måste innehålla:
+Metadata must contain:
 - title
 - description
 - keywords
@@ -88,19 +89,19 @@ Metadata måste innehålla:
 - openGraph
 - twitter
 
-Metadata måste vara SEO-optimerad på spanska.
+Metadata must be SEO-optimized in the target market language.
 
-Exempel:
+Example:
 ```typescript
 export const metadata: Metadata = {
-  title: "Your Company | Agencia de Marketing Digital en Cali",
-  description: "Agencia líder en Cali especializada en SEO, desarrollo web y marketing digital que impulsa negocios al top de Google.",
+  title: "[Company Name] | Digital Marketing Agency",
+  description: "Leading agency specializing in SEO, web development, and digital marketing that drives businesses to the top of Google.",
   keywords: [
-    "Agencia de marketing digital en Cali",
-    "SEO en Cali",
-    "Desarrollo web en Cali",
-    "Posicionamiento en Google",
-    "Marketing digital Colombia"
+    "Digital marketing agency",
+    "SEO services",
+    "Web development",
+    "Google ranking",
+    "Digital marketing"
   ],
   metadataBase: new URL("https://example.com"),
   alternates: {
@@ -111,23 +112,23 @@ export const metadata: Metadata = {
     follow: true
   },
   openGraph: {
-    title: "Your Company | Agencia SEO en Cali",
-    description: "Expertos en SEO y desarrollo web en Cali.",
+    title: "[Company Name] | SEO Agency",
+    description: "Experts in SEO and web development.",
     url: "https://example.com",
-    siteName: "Your Company",
-    locale: "es_CO",
+    siteName: "[Company Name]",
+    locale: "en_US",
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Your Company | Marketing Digital en Cali",
-    description: "SEO y desarrollo web para empresas."
+    title: "[Company Name] | Digital Marketing",
+    description: "SEO and web development for businesses."
   }
 }
 ```
 
 ### 1.2 HTTP SEO Headers
-Implementera SEO-headers via Next.js middleware eller headers-konfiguration:
+Implement SEO headers via Next.js middleware or headers configuration:
 
 **X-Robots-Tag:**
 ```
@@ -136,7 +137,7 @@ X-Robots-Tag: index, follow, max-image-preview:large, max-video-preview:-1, max-
 
 **Content-Language:**
 ```
-Content-Language: es-CO, es
+Content-Language: en-US, en
 ```
 
 **Link rel=canonical:**
@@ -146,10 +147,10 @@ Link: <https://example.com>; rel="canonical"
 
 **Link rel=alternate (hreflang):**
 ```
-Link: <https://example.com/es>; rel="alternate", <https://example.com/en>; rel="alternate"
+Link: <https://example.com/en>; rel="alternate", <https://example.com/es>; rel="alternate"
 ```
 
-Implementera i next.config.js eller middleware.ts:
+Implement in next.config.js or middleware.ts:
 ```javascript
 // next.config.js
 async headers() {
@@ -163,11 +164,11 @@ async headers() {
         },
         {
           key: 'Content-Language',
-          value: 'es-CO'
+          value: 'en-US'
         },
         {
           key: 'Link',
-          value: '<https://example.com/es>; rel="alternate", <https://example.com/en>; rel="alternate"'
+          value: '<https://example.com/en>; rel="alternate", <https://example.com/es>; rel="alternate"'
         }
       ]
     }
@@ -175,27 +176,27 @@ async headers() {
 }
 ```
 
-### 1.3 Hreflang för internationell SEO
-Implementera hreflang i layout.tsx:
+### 1.3 Hreflang for International SEO
+Implement hreflang in layout.tsx:
 
 ```typescript
 export const metadata: Metadata = {
   alternates: {
     canonical: "https://example.com",
     languages: {
-      "es-CO": "https://example.com",
-      "en": "https://example.com/en",
-      "es": "https://example.com/es"
+      "en-US": "https://example.com",
+      "es": "https://example.com/es",
+      "en": "https://example.com/en"
     }
   }
 }
 ```
 
-### 1.4 Dynamiska OpenGraph-bilder (Next.js ImageResponse)
+### 1.4 Dynamic OpenGraph Images (Next.js ImageResponse)
 
-Sajten SKA generera dynamiska delningsbilder för att maximera CTR (Click-Through Rate) på sociala medier.
+The site SHOULD generate dynamic sharing images to maximize CTR (Click-Through Rate) on social media.
 
-Skapa `app/og/route.tsx`:
+Create `app/og/route.tsx`:
 ```tsx
 import { ImageResponse } from 'next/og'
 
@@ -203,7 +204,7 @@ export const runtime = 'edge'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
-  const title = searchParams.get('title') || 'Your Company'
+  const title = searchParams.get('title') || '[Company Name]'
 
   return new ImageResponse(
     (
@@ -212,7 +213,7 @@ export async function GET(request: Request) {
           {title}
         </h1>
         <p style={{ fontSize: '32px', color: '#a1a1aa', marginTop: '20px' }}>
-          Agencia de Marketing Digital en Cali
+          Digital Marketing Agency
         </p>
       </div>
     ),
@@ -221,12 +222,12 @@ export async function GET(request: Request) {
 }
 ```
 
-Använd i metadata:
+Use in metadata:
 ```typescript
 openGraph: {
   images: [
     {
-      url: 'https://example.com/og?title=Your+Company',
+      url: 'https://example.com/og?title=[Company+Name]',
       width: 1200,
       height: 630
     }
@@ -236,10 +237,10 @@ openGraph: {
 
 ---
 
-## 2. 🤖 AI Crawler Optimization
+## 2. AI Crawler Optimization
 
 ### 2.1 AI Crawler Robots.txt
-Optimera robots.txt för AI-crawlers. Lägg till:
+Optimize robots.txt for AI crawlers. Add:
 
 ```
 # AI Crawlers - Allow for indexing
@@ -271,7 +272,7 @@ User-agent: Applebot
 Allow: /
 ```
 
-Skapa app/robots.ts:
+Create app/robots.ts:
 ```typescript
 import { MetadataRoute } from 'next'
 
@@ -326,27 +327,27 @@ export default function robots(): MetadataRoute.Robots {
 
 ---
 
-## 3. 📊 Advanced Schema Markup
+## 3. Advanced Schema Markup
 
-Implementera JSON-LD Structured Data.
+Implement JSON-LD Structured Data.
 
-Skapa komponent: components/StructuredData.tsx
+Create component: components/StructuredData.tsx
 
 ### 3.1 LocalBusiness Schema
 ```json
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "name": "Your Company",
+  "name": "[Company Name]",
   "url": "https://example.com",
   "logo": "https://example.com/logo.png",
-  "description": "Agencia de marketing digital en Cali especializada en SEO y desarrollo web.",
+  "description": "Digital marketing agency specializing in SEO and web development.",
   "address": {
     "@type": "PostalAddress",
-    "addressLocality": "Cali",
-    "addressCountry": "Colombia"
+    "addressLocality": "[City]",
+    "addressCountry": "[Country]"
   },
-  "areaServed": "Cali, Colombia",
+  "areaServed": "[City], [Country]",
   "sameAs": [
     "https://facebook.com",
     "https://instagram.com"
@@ -355,21 +356,21 @@ Skapa komponent: components/StructuredData.tsx
 ```
 
 ### 3.2 Organization Schema
-För att stärka EEAT.
+To strengthen EEAT.
 
 ### 3.3 Service Schema
-Tjänster:
+Services:
 - SEO
-- Desarrollo Web
-- Marketing Digital
-- Publicidad Online
+- Web Development
+- Digital Marketing
+- Online Advertising
 
-### 3.4 WebSite Schema (NYTT)
+### 3.4 WebSite Schema (NEW)
 ```json
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Your Company",
+  "name": "[Company Name]",
   "url": "https://example.com",
   "potentialAction": {
     "@type": "SearchAction",
@@ -379,7 +380,7 @@ Tjänster:
 }
 ```
 
-### 3.5 FAQ Schema (NYTT)
+### 3.5 FAQ Schema (NEW)
 ```json
 {
   "@context": "https://schema.org",
@@ -387,17 +388,17 @@ Tjänster:
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "¿Qué es SEO y por qué es importante?",
+      "name": "What is SEO and why is it important?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "SEO (Search Engine Optimization) es el proceso de optimizar..."
+        "text": "SEO (Search Engine Optimization) is the process of optimizing..."
       }
     }
   ]
 }
 ```
 
-### 3.6 Breadcrumb Schema (NYTT)
+### 3.6 Breadcrumb Schema (NEW)
 ```json
 {
   "@context": "https://schema.org",
@@ -406,30 +407,30 @@ Tjänster:
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "Inicio",
+      "name": "Home",
       "item": "https://example.com/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Servicios",
-      "item": "https://example.com/servicios"
+      "name": "Services",
+      "item": "https://example.com/services"
     }
   ]
 }
 ```
 
-### 3.7 Article Schema (NYTT)
-För blogginlägg.
+### 3.7 Article Schema (NEW)
+For blog posts.
 
-### 3.8 Review Schema (NYTT)
+### 3.8 Review Schema (NEW)
 ```json
 {
   "@context": "https://schema.org",
   "@type": "Review",
   "itemReviewed": {
     "@type": "Service",
-    "name": "SEO Cali"
+    "name": "SEO Services"
   },
   "reviewRating": {
     "@type": "Rating",
@@ -440,9 +441,9 @@ För blogginlägg.
 
 ---
 
-## 4. Semantisk HTML + Accessibility
+## 4. Semantic HTML + Accessibility
 
-Använd strikt struktur:
+Use strict structure:
 ```html
 <header>
 <nav>
@@ -452,40 +453,40 @@ Använd strikt struktur:
 <footer>
 ```
 
-Rubrikhierarki EXAKT:
+Heading hierarchy EXACT:
 - 1x h1
 - h2
 - h3
 
-Exempel:
-- h1: Agencia de Marketing Digital en Cali
-- h2: Nuestros Servicios
-- h3: SEO Profesional
+Example:
+- h1: Digital Marketing Agency
+- h2: Our Services
+- h3: Professional SEO
 
 ### Accessibility (A11y)
 
-- Alla knappar: aria-label
-- Alla ikoner: aria-hidden="true"
+- All buttons: aria-label
+- All icons: aria-hidden="true"
 - Navigation: aria-label="Main navigation"
 
 ---
 
-## 5. Intern Länkstruktur
+## 5. Internal Link Structure
 
-ALLA interna länka måste använda:
+ALL internal links must use:
 ```tsx
 import Link from "next/link"
 
 <Link href="/seo">
-  Servicios de SEO en Cali
+  SEO Services
 </Link>
 ```
 
 ---
 
-## 6. Externa Länkar
+## 6. External Links
 
-Alla externa länka:
+All external links:
 ```html
 target="_blank"
 rel="noopener noreferrer"
@@ -493,19 +494,19 @@ rel="noopener noreferrer"
 
 ---
 
-## 7. Dynamisk & Skalbar Sitemap
+## 7. Dynamic & Scalable Sitemap
 
-Sitemapen MÅSTE vara dynamisk för att automatiskt inkludera nya tjänster, artiklar och städer.
+The sitemap MUST be dynamic to automatically include new services, articles, and locations.
 
-Skapa: `app/sitemap.ts`
+Create: `app/sitemap.ts`
 ```typescript
 import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Exempel på dynamisk data-fetching för sitemap
+  // Example of dynamic data fetching for sitemap
   // const services = await getServices();
   // const dynamicRoutes = services.map(service => ({
-  //   url: `https://domän.se/tjanster/${service.slug}`,
+  //   url: `https://example.com/services/${service.slug}`,
   //   lastModified: new Date(service.updatedAt),
   //   changeFrequency: 'weekly',
   //   priority: 0.8,
@@ -519,13 +520,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     },
     {
-      url: 'https://example.com/servicios',
+      url: 'https://example.com/services',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: 'https://example.com/desarrollo-web',
+      url: 'https://example.com/web-development',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
@@ -537,7 +538,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: 'https://example.com/contacto',
+      url: 'https://example.com/contact',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.5,
@@ -549,11 +550,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 }
 ```
 
-### 2.2 Kirurgisk Robots.txt
+### 2.2 Surgical Robots.txt
 
-Skydda din "Crawl Budget" genom att blockera sidor som inte tillför SEO-värde, samtidigt som du bjuder in AI-crawlers till det viktiga innehållet.
+Protect your "Crawl Budget" by blocking pages that don't contribute SEO value, while inviting AI crawlers to the important content.
 
-Skapa: `app/robots.ts`
+Create: `app/robots.ts`
 ```typescript
 import { MetadataRoute } from 'next'
 
@@ -581,50 +582,50 @@ export default function robots(): MetadataRoute.Robots {
 
 ## 8. AI Search Optimization
 
-Optimera för:
+Optimize for:
 - Google SGE
 - ChatGPT browsing
 - Gemini AI
 - Perplexity
 - Claude
 
-Genom:
-- Tydliga rubriker
-- FAQ sektioner
-- schema markup
-- semantisk HTML
-- structured content
+Through:
+- Clear headings
+- FAQ sections
+- Schema markup
+- Semantic HTML
+- Structured content
 
-### 8.1 SGE-Optimerad DOM-Struktur
+### 8.1 SGE-Optimized DOM Structure
 
-För AI-modeller (ChatGPT, Google SGE, Perplexity) ska sajten använda ditt innehåll som källa:
+For AI models (ChatGPT, Google SGE, Perplexity), the site should use your content as a source:
 
-#### TL;DR Sektioner
-Börja alltid långa sidor med en "Kort sammanfattning" i en tydlig `<aside>` eller `<div className="bg-white/5 p-4 rounded-xl">`:
+#### TL;DR Sections
+Always start long pages with a "Brief summary" in a clear `<aside>` or `<div className="bg-white/5 p-4 rounded-xl">`:
 
 ```tsx
 <aside className="bg-white/5 p-6 rounded-xl border border-white/10 mb-8">
-  <h3 className="text-lg font-semibold text-accent mb-2">Sammanfattning</h3>
+  <h3 className="text-lg font-semibold text-accent mb-2">Summary</h3>
   <p className="text-gray-300">
-    Vi erbjuder professionella SEO-tjänster i Cali. Med 10+ års erfarenhet
-    hjälper vi företag att ranka högt på Google.
+    We offer professional SEO services. With 10+ years of experience
+    we help businesses rank high on Google.
   </p>
 </aside>
 ```
 
-#### AI-Vänliga Definitioner
-Använd `<b>` eller `<strong>` direkt följt av ordet "är":
+#### AI-Friendly Definitions
+Use `<b>` or `<strong>` directly followed by the word "is":
 
 ```tsx
 <p>
-  <strong>SEO</strong> är processen att optimera din hemsida för att synas
-  högre i sökmotorernas organiska resultat. <strong>Lokal SEO</strong> är
-  optimering för geografiska sökningar i ett specifikt område.
+  <strong>SEO</strong> is the process of optimizing your website to appear
+  higher in organic search engine results. <strong>Local SEO</strong> is
+  optimization for geographic searches in a specific area.
 </p>
 ```
 
-#### Brusreducering (data-nosnippet)
-Använd attributet `data-nosnippet` på element som inte ska indexeras av AI:
+#### Noise Reduction (data-nosnippet)
+Use the `data-nosnippet` attribute on elements that should not be indexed by AI:
 
 ```tsx
 <footer data-nosnippet>
@@ -642,58 +643,58 @@ Använd attributet `data-nosnippet` på element som inte ska indexeras av AI:
 
 ## 9. EEAT Trust Signals
 
-Lägg till:
+Add:
 - Company description
 - Experience
 - Certifications
 - Client references
 
-Exempel:
-- 10+ años de experiencia
-- Clientes en Colombia
-- Expertos certificados en SEO
+Example:
+- 10+ years of experience
+- Clients in [region]
+- Certified SEO experts
 
 ---
 
 ## 10. Programmatic SEO
 
-Automatiskt skapa content clusters:
+Automatically create content clusters:
 
 **SEO Cluster:**
-- /seo-cali
-- /seo-local-cali
-- /seo-para-empresas-cali
-- /seo-tecnico-cali
-- /agencia-seo-cali
+- /seo-[city]
+- /local-seo-[city]
+- /seo-for-businesses-[city]
+- /technical-seo-[city]
+- /seo-agency-[city]
 
 ---
 
 ## 11. AI Indexability
 
-Optimera innehåll för:
+Optimize content for:
 - embeddings
 - vector search
 - LLM summarization
 
-Genom:
-- Tydliga sektioner
-- Korta stycken
-- Strukturerad data
+Through:
+- Clear sections
+- Short paragraphs
+- Structured data
 - FAQ
 
 ---
 
-## 12. 📊 Advanced Structured Data Expansion (SERP Dominance)
+## 12. Advanced Structured Data Expansion (SERP Dominance)
 
-Utöka med dessa schema för extra SERP features:
+Expand with these schemas for extra SERP features:
 
 ### 12.1 VideoObject Schema
 ```json
 {
   "@context": "https://schema.org",
   "@type": "VideoObject",
-  "name": "Agencia de Marketing Digital en Cali",
-  "description": "Your Company - Experts in SEO and digital marketing in Cali, Colombia",
+  "name": "Digital Marketing Agency",
+  "description": "[Company Name] - Experts in SEO and digital marketing",
   "thumbnailUrl": "https://example.com/images/video-thumbnail.jpg",
   "uploadDate": "2024-01-15T08:00:00+08:00",
   "duration": "PT2M30S",
@@ -712,10 +713,10 @@ Utöka med dessa schema för extra SERP features:
 {
   "@context": "https://schema.org",
   "@type": "ImageObject",
-  "name": "Agencia SEO Cali",
-  "description": "Professional SEO services in Cali, Colombia",
-  "url": "https://example.com/images/services/seo-cali.jpg",
-  "contentUrl": "https://example.com/images/services/seo-cali.jpg",
+  "name": "SEO Agency",
+  "description": "Professional SEO services",
+  "url": "https://example.com/images/services/seo.jpg",
+  "contentUrl": "https://example.com/images/services/seo.jpg",
   "encodingFormats": ["image/jpeg", "image/webp"],
   "width": {
     "@type": "QuantitativeValue",
@@ -733,25 +734,25 @@ Utöka med dessa schema för extra SERP features:
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
-  "name": "Cómo mejorar el SEO de tu empresa en Cali",
+  "name": "How to improve your business SEO",
   "step": [
     {
       "@type": "HowToStep",
-      "name": "1. Análisis inicial",
-      "text": "Realizamos un análisis completo de tu presencia web actual.",
-      "url": "https://example.com/seo#analisis"
+      "name": "1. Initial analysis",
+      "text": "We perform a complete analysis of your current web presence.",
+      "url": "https://example.com/seo#analysis"
     },
     {
       "@type": "HowToStep",
-      "name": "2. Estrategia SEO",
-      "text": "Desarrollamos una estrategia personalizada para tu negocio.",
-      "url": "https://example.com/seo#estrategia"
+      "name": "2. SEO Strategy",
+      "text": "We develop a personalized strategy for your business.",
+      "url": "https://example.com/seo#strategy"
     },
     {
       "@type": "HowToStep",
-      "name": "3. Implementación",
-      "text": "Implementamos las optimizaciones técnicas y de contenido.",
-      "url": "https://example.com/seo#implementacion"
+      "name": "3. Implementation",
+      "text": "We implement the technical and content optimizations.",
+      "url": "https://example.com/seo#implementation"
     }
   ]
 }
@@ -790,10 +791,10 @@ Utöka med dessa schema för extra SERP features:
 
 ---
 
-## 13. 🎛️ Advanced Indexation Control
+## 13. Advanced Indexation Control
 
 ### 13.1 Granular Robots Meta
-Implementera detaljerad robots-kontroll:
+Implement detailed robots control:
 
 ```typescript
 export const metadata: Metadata = {
@@ -812,9 +813,9 @@ export const metadata: Metadata = {
 ```
 
 ### 13.2 Per-Page Indexation Control
-Skapa metadata för specifika sidor:
+Create metadata for specific pages:
 
-**Noindex för admin/sidor:**
+**Noindex for admin pages:**
 ```typescript
 export const metadata: Metadata = {
   robots: {
@@ -824,7 +825,7 @@ export const metadata: Metadata = {
 }
 ```
 
-**Index med begränsningar:**
+**Index with restrictions:**
 ```typescript
 export const metadata: Metadata = {
   robots: {
@@ -837,31 +838,31 @@ export const metadata: Metadata = {
 
 ---
 
-## 14. 💰 Crawl Budget Optimization
+## 14. Crawl Budget Optimization
 
 ### 14.1 Crawl Depth Analysis
-Analysera och optimera sidstruktur:
-- Maximera 3 klick från startsidan
-- Eliminera djupa nivåer
-- Skapa platt struktur
+Analyze and optimize page structure:
+- Maximum 3 clicks from the home page
+- Eliminate deep levels
+- Create a flat structure
 
 ### 14.2 Orphan Pages
-Identifiera och åtgärda:
-- Sidor utan interna länka
-- Länka från relevanta sidor
+Identify and fix:
+- Pages without internal links
+- Link from relevant pages
 
 ### 14.3 Redirect Chains
-Åtgärda:
-- För långa redirect-kedjor
+Fix:
+- Excessively long redirect chains
 - Redirect loops
-- 301 vs 302 korrekt användning
+- Correct use of 301 vs 302
 
 ### 14.4 Duplicate URLs
-Hantera:
+Handle:
 - www vs non-www
 - http vs https
 - trailing slashes
-- URL-parametrar
+- URL parameters
 
 ### 14.5 Implementation
 ```typescript
@@ -885,149 +886,149 @@ module.exports = {
 
 ---
 
-## 15. 🔗 Advanced Internal Linking Engine
+## 15. Advanced Internal Linking Engine
 
-### 15.1 Pillar → Cluster Struktur
-Bygg authority med:
+### 15.1 Pillar → Cluster Structure
+Build authority with:
 
-**SEO Pillar (Huvudsida):**
+**SEO Pillar (Main page):**
 ```
-/seo-cali (PILLAR)
-  ├─ /seo-local-cali
-  ├─ /agencia-seo-cali
-  ├─ /seo-para-empresas-cali
-  ├─ /seo-tecnico-cali
-  └─ /seo-costos-cali
+/seo-[city] (PILLAR)
+  ├─ /local-seo-[city]
+  ├─ /seo-agency-[city]
+  ├─ /seo-for-businesses-[city]
+  ├─ /technical-seo-[city]
+  └─ /seo-pricing-[city]
 ```
 
 **Marketing Pillar:**
 ```
-/marketing-digital-cali (PILLAR)
-  ├─ /google-ads-cali
-  ├─ /publicidad-digital-colombia
-  ├─ /marketing-redes-sociales-cali
-  └─ /email-marketing-cali
+/digital-marketing-[city] (PILLAR)
+  ├─ /google-ads-[city]
+  ├─ /online-advertising-[country]
+  ├─ /social-media-marketing-[city]
+  └─ /email-marketing-[city]
 ```
 
 **Web Development Pillar:**
 ```
-/desarrollo-web-cali (PILLAR)
-  ├─ /tiendas-online-colombia
-  ├─ /diseno-web-profesional
-  └─ /mantenimiento-web-colombia
+/web-development-[city] (PILLAR)
+  ├─ /online-stores-[country]
+  ├─ /professional-web-design
+  └─ /web-maintenance-[country]
 ```
 
 ### 15.2 Contextual Links
-Lägg till kontextuella länka inom content:
+Add contextual links within content:
 
 ```tsx
-// På /seo-cali sidan
-<Link href="/seo-local-cali">
-  SEO local en Cali
+// On the /seo-[city] page
+<Link href="/local-seo-[city]">
+  Local SEO in [City]
 </Link>
 
-<Link href="/agencia-seo-cali">
-  Agencia SEO Cali
+<Link href="/seo-agency-[city]">
+  SEO Agency [City]
 </Link>
 ```
 
 ### 15.3 Link Authority Flow
-Säkerställ att:
-- Pillar pages har flest interna länka
-- Cluster-sidor pekar tillbaka till pillar
-- Använd relevant anchor text
+Ensure that:
+- Pillar pages have the most internal links
+- Cluster pages point back to the pillar
+- Use relevant anchor text
 
 ---
 
-## 16. 🧠 Content Entity Optimization (AI SEO)
+## 16. Content Entity Optimization (AI SEO)
 
 ### 16.1 Entity Identification
-AI-sök använder entities mer än keywords. Säkerställ att dessa entities finns:
+AI search uses entities more than keywords. Ensure these entities are present:
 
-**Primära Entities:**
-- Cali
-- Colombia
+**Primary Entities:**
+- [City]
+- [Country]
 - SEO
-- Marketing Digital
+- Digital Marketing
 - Google Ads
-- Diseño Web
+- Web Design
 
-**Sekundära Entities:**
-- Your Company
-- Agencia de marketing
-- Posicionamiento web
-- Desarrollo de páginas web
+**Secondary Entities:**
+- [Company Name]
+- Marketing agency
+- Web positioning
+- Web page development
 
 ### 16.2 Entity Implementation
-Använd i text och schema:
+Use in text and schema:
 
 ```tsx
-// I komponenter, använd entities i alt-texter
+// In components, use entities in alt text
 <Image
   src="/services/seo.jpg"
-  alt="Servicios de SEO en Cali, Colombia - Your Company"
+  alt="SEO services in [City], [Country] - [Company Name]"
   width={800}
   height={600}
 />
 
-// I metadata
+// In metadata
 keywords: [
-  "SEO Cali",
-  "Marketing Digital Cali",
-  "Google Ads Colombia",
-  "Diseño Web profesional Cali"
+  "SEO [City]",
+  "Digital Marketing [City]",
+  "Google Ads [Country]",
+  "Professional Web Design [City]"
 ]
 ```
 
 ### 16.3 Knowledge Graph Integration
-Stärk knowledge graph med:
-- Wikipedia-liknande definitioner
-- Entity-baserad content
-- Semantiska relationer
+Strengthen knowledge graph with:
+- Wikipedia-style definitions
+- Entity-based content
+- Semantic relationships
 
 ---
 
-## 17. 🔬 AUTOMATISK SEO AUDIT (BONUS)
+## 17. AUTOMATIC SEO AUDIT (BONUS)
 
-### 17.1 Audit vid @optimera
-När du kör @optimera ska du ALLTID först köra en automatisk SEO-audit:
+### 17.1 Audit on @optimera
+When you run @optimera you should ALWAYS first run an automatic SEO audit:
 
-**Steg 1: Analysera hela projektet**
+**Step 1: Analyze the entire project**
 
-Gå igenom:
-- Alla .tsx, .ts, .js filer
-- Alla komponenter
-- Alla sidor
+Go through:
+- All .tsx, .ts, .js files
+- All components
+- All pages
 - next.config.js
 - package.json
 
-**Steg 2: Lista SEO-problem**
+**Step 2: List SEO issues**
 
-Kontrollera och rapportera:
+Check and report:
 
-| Problem | Status | Åtgärd |
-|---------|--------|--------|
-| Missing alt tags | ❌/✅ | Lägg till alt med nyckelord |
-| Duplicate titles | ❌/✅ | Unika titlar per sida |
-| Missing meta descriptions | ❌/✅ | Lägg till beskrivningar |
-| Missing canonical URLs | ❌/✅ | Lägg till canonical |
-| Missing Schema markup | ❌/✅ | Lägg till JSON-LD |
-| Broken internal links | ❌/✅ | Fixa länka |
-| Missing hreflang | ❌/✅ | Lägg till språkversioner |
-| Slow Core Web Vitals | ❌/✅ | Optimera bilder, JS |
-| Missing sitemap | ❌/✅ | Skapa sitemap |
-| Missing robots.txt | ❌/✅ | Skapa robots |
+| Issue | Status | Action |
+|-------|--------|--------|
+| Missing alt tags | ❌/✅ | Add alt with keywords |
+| Duplicate titles | ❌/✅ | Unique titles per page |
+| Missing meta descriptions | ❌/✅ | Add descriptions |
+| Missing canonical URLs | ❌/✅ | Add canonical |
+| Missing Schema markup | ❌/✅ | Add JSON-LD |
+| Broken internal links | ❌/✅ | Fix links |
+| Missing hreflang | ❌/✅ | Add language versions |
+| Slow Core Web Vitals | ❌/✅ | Optimize images, JS |
+| Missing sitemap | ❌/✅ | Create sitemap |
+| Missing robots.txt | ❌/✅ | Create robots |
 
-**Steg 3: Fixa problemen**
+**Step 3: Fix the issues**
 
-Implementera alla åtgärder direkt.
+Implement all fixes directly.
 
-**Steg 4: Slutrapport**
+**Step 4: Final report**
 
-Exempel output:
+Example output:
 
 ```
-🔍 SEO AUDIT RESULTS
+SEO AUDIT RESULTS
 ═══════════════════════════════════════════
 
 Analyzed: 47 files
@@ -1045,7 +1046,7 @@ FIXES APPLIED:
 ──────────────
 ✔ Added alt tags to 3 images
 ✔ Fixed duplicate meta descriptions
-✔ Added canonical URL to /contacto
+✔ Added canonical URL to /contact
 ✔ Implemented JSON-LD on 5 pages
 ✔ Fixed broken internal links
 ✔ Added VideoObject schema
@@ -1076,85 +1077,85 @@ Ready for indexing.
 
 ---
 
-# DEL 2: PRESTANDA-OPTIMERING
+# PART 2: PERFORMANCE OPTIMIZATION
 
 ---
 
-## 🔎 STEG 1 — FULL CODEBASE ANALYSIS
+## STEP 1 -- FULL CODEBASE ANALYSIS
 
-Analysera hela projektet:
-- alla .ts
+Analyze the entire project:
+- all .ts
 - .tsx
 - .js
 - .jsx
 - .css
 - .scss
-- config-filer
+- config files
 - dependencies
 
-Identifiera:
-- långsam rendering
-- onödig JavaScript
-- stora bundles
-- onödiga re-renders
-- dåliga imports
+Identify:
+- slow rendering
+- unnecessary JavaScript
+- large bundles
+- unnecessary re-renders
+- bad imports
 - blocking resources
-- dålig caching
-- onödig client-side logik
+- poor caching
+- unnecessary client-side logic
 
 ---
 
-## ⚡ STEG 2 — NEXT.JS PERFORMANCE OPTIMIZATION
+## STEP 2 -- NEXT.JS PERFORMANCE OPTIMIZATION
 
 ### Server Components First
-Alla komponenter ska vara:
+All components should be:
 - **Server Components**
-- om de inte kräver:
+- unless they require:
   - useState
   - useEffect
   - browser APIs
 
-Flytta logik från Client → Server när möjligt.
+Move logic from Client → Server when possible.
 
-**Identifiera vilka komponenter som kan vara Server Components:**
-- Statiska komponenter utan interaktion
-- Komponenter som bara renderar data
-- Komponenter utan state/effects
+**Identify which components can be Server Components:**
+- Static components without interaction
+- Components that only render data
+- Components without state/effects
 
 ### Dynamic Imports
-Tunga komponenter ska laddas dynamiskt.
+Heavy components should be loaded dynamically.
 
-Exempel:
+Example:
 ```tsx
 const HeavyComponent = dynamic(() => import("./HeavyComponent"), {
-  loading: () => <p>Cargando...</p>
+  loading: () => <p>Loading...</p>
 })
 ```
 
-Det minskar initial bundle.
+This reduces initial bundle.
 
 ### Bundle Size Reduction
-Identifiera:
-- stora libraries
-- onödiga dependencies
-- duplicerade imports
+Identify:
+- large libraries
+- unnecessary dependencies
+- duplicated imports
 
-Optimera:
+Optimize:
 - tree shaking
 - modular imports
 
-Exempel:
+Example:
 ```tsx
-// ❌ Dåligt
+// ❌ Bad
 import _ from "lodash"
 
-// ✅ Bra
+// ✅ Good
 import debounce from "lodash/debounce"
 
-// ❌ Dåligt
+// ❌ Bad
 import { Button, Card, Input } from "some-ui-lib"
 
-// ✅ Bra
+// ✅ Good
 import Button from "some-ui-lib/Button"
 import Card from "some-ui-lib/Card"
 import Input from "some-ui-lib/Input"
@@ -1162,33 +1163,33 @@ import Input from "some-ui-lib/Input"
 
 ---
 
-## 🖼 STEG 3 — IMAGE PERFORMANCE
+## STEP 3 -- IMAGE PERFORMANCE
 
-Alla bilder måste använda:
+All images must use:
 - next/image
 
-Optimera:
+Optimize:
 - sizes
 - width
 - height
 - lazy loading
 
-Hero-bilder:
+Hero images:
 ```tsx
 <Image
   src="/hero.jpg"
-  alt="Agencia de marketing digital en Cali"
+  alt="Digital marketing agency"
   width={1200}
   height={600}
   priority={true}
 />
 ```
 
-Alla andra bilder:
+All other images:
 ```tsx
 <Image
   src="/image.jpg"
-  alt="SEO en Cali"
+  alt="SEO services"
   width={800}
   height={600}
   sizes="(max-width: 768px) 100vw, 50vw"
@@ -1197,49 +1198,49 @@ Alla andra bilder:
 
 ---
 
-## ⚡ STEG 4 — CORE WEB VITALS OPTIMIZATION
+## STEP 4 -- CORE WEB VITALS OPTIMIZATION
 
-Optimera för:
+Optimize for:
 - **LCP** (Largest Contentful Paint)
 - **CLS** (Cumulative Layout Shift)
 - **INP** (Interaction to Next Paint)
 - **FID** (First Input Delay)
 - **TTFB** (Time to First Byte)
 
-Åtgärder:
-- preload kritiska resurser
-- reducera blocking scripts
-- optimera fonts
-- minimera layout shifts
+Actions:
+- preload critical resources
+- reduce blocking scripts
+- optimize fonts
+- minimize layout shifts
 
-**LCP Optimering:**
-- Ladda hero-bilden med priority
+**LCP Optimization:**
+- Load hero image with priority
 - Preload first paint CSS
-- Eliminera render-blocking resources
+- Eliminate render-blocking resources
 
-**CLS Optimering:**
-- Sätt width/height på alla bilder
-- Använd font-display: swap
-- Reservera utrymme för dynamiskt innehåll
+**CLS Optimization:**
+- Set width/height on all images
+- Use font-display: swap
+- Reserve space for dynamic content
 
-**INP/FID Optimering:**
-- Minimera main thread arbete
-- Flytta tung JS till server/edge
-- Dela upp långa tasks
+**INP/FID Optimization:**
+- Minimize main thread work
+- Move heavy JS to server/edge
+- Split long tasks
 
-**TTFB Optimering:**
-- Använd Edge runtime
-- Implementera caching
-- Optimera database queries
+**TTFB Optimization:**
+- Use Edge runtime
+- Implement caching
+- Optimize database queries
 
 ---
 
-## 🔤 STEG 5 — FONT OPTIMIZATION
+## STEP 5 -- FONT OPTIMIZATION
 
-Använd:
+Use:
 - next/font/google
 
-för att eliminera:
+to eliminate:
 - FOIT (Flash of Invisible Text)
 - FOUT (Flash of Unstyled Text)
 
@@ -1259,20 +1260,20 @@ const poppins = Poppins({
 })
 ```
 
-Preload kritiska fonts.
+Preload critical fonts.
 
 ---
 
-## 🔄 STEG 6 — RENDER OPTIMIZATION
+## STEP 6 -- RENDER OPTIMIZATION
 
-Förhindra onödiga renders.
+Prevent unnecessary renders.
 
-Använd:
+Use:
 - React.memo
 - useMemo
 - useCallback
 
-där det behövs.
+where needed.
 
 **React.memo:**
 ```tsx
@@ -1297,24 +1298,24 @@ const handleClick = useCallback(() => {
 
 ---
 
-## 📦 STEG 7 — JAVASCRIPT REDUCTION
+## STEP 7 -- JAVASCRIPT REDUCTION
 
-Minimera:
+Minimize:
 - client-side JS
 - hydration cost
 - unused code
 
-Flytta logik till:
+Move logic to:
 - server
 - edge functions
 
-**Undvik Client Components:**
+**Avoid Client Components:**
 ```tsx
-// ❌ Gör inte så här om det inte behövs
+// ❌ Don't do this unless necessary
 'use client'
 import { useState } from 'react'
 
-// ✅ Gör så här istället - Server Component
+// ✅ Do this instead - Server Component
 export default function Page() {
   // Server-side logic
   return <div>Content</div>
@@ -1323,14 +1324,14 @@ export default function Page() {
 
 ---
 
-## 🌍 STEG 8 — NETWORK OPTIMIZATION
+## STEP 8 -- NETWORK OPTIMIZATION
 
-Implementera:
+Implement:
 - preconnect
 - dns-prefetch
 - preload
 
-I app/layout.tsx:
+In app/layout.tsx:
 ```tsx
 <head>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1343,22 +1344,22 @@ I app/layout.tsx:
 
 ---
 
-## ⚡ STEG 9 — CACHING OPTIMIZATION
+## STEP 9 -- CACHING OPTIMIZATION
 
-Implementera:
+Implement:
 - HTTP caching
 - static generation
 - incremental static regeneration (ISR)
 
 **Static Generation:**
 ```tsx
-// Alla sidor som kan vara statiska ska vara det
+// All pages that can be static should be
 export const dynamic = 'force-static'
 ```
 
 **ISR:**
 ```tsx
-export const revalidate = 3600 // Revalidate varje timme
+export const revalidate = 3600 // Revalidate every hour
 ```
 
 **Route Segment Config:**
@@ -1369,47 +1370,47 @@ export const fetchCache = 'force-cache'
 
 ---
 
-## 🔍 STEG 10 — DEAD CODE REMOVAL
+## STEP 10 -- DEAD CODE REMOVAL
 
-Identifiera och ta bort:
-- oanvända komponenter
-- oanvända imports
-- duplicerad kod
+Identify and remove:
+- unused components
+- unused imports
+- duplicated code
 
-**Utan att påverka funktionalitet.**
+**Without affecting functionality.**
 
-Använd verktyg som:
+Use tools like:
 - @next/bundle-analyzer
 - source-map-explorer
 
 ---
 
-## 🧠 STEG 11 — AI PERFORMANCE ANALYSIS
+## STEP 11 -- AI PERFORMANCE ANALYSIS
 
-Analysera även:
+Also analyze:
 - render blocking patterns
 - hydration bottlenecks
 - expensive components
 
-Optimera dessa.
+Optimize these.
 
-**Vanliga problem:**
-- För stora Client Components
-- Onödig hydration
-- Heavy computations i useEffect
-- Stora libraries som laddas onödigt
+**Common issues:**
+- Oversized Client Components
+- Unnecessary hydration
+- Heavy computations in useEffect
+- Large libraries loaded unnecessarily
 
 ---
 
-## 📊 STEG 12 — BUILD OPTIMIZATION
+## STEP 12 -- BUILD OPTIMIZATION
 
-Optimera:
+Optimize:
 - Webpack/Turbopack
 - production builds
 - minification
 - tree shaking
 
-I next.config.js:
+In next.config.js:
 ```javascript
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -1429,13 +1430,13 @@ module.exports = nextConfig
 
 ---
 
-## 🧪 STEG 13 — PERFORMANCE VALIDATION
+## STEP 13 -- PERFORMANCE VALIDATION
 
-Verifiera förbättringar mot:
+Verify improvements against:
 - Lighthouse
 - Core Web Vitals
 
-Målsättning:
+Target:
 - Performance: 95+
 - SEO: 100
 - Best Practices: 100
@@ -1443,11 +1444,11 @@ Målsättning:
 
 ---
 
-# 📋 STEG 14 — PRESTANDA-RAPPORT
+# STEP 14 -- PERFORMANCE REPORT
 
-Efter optimeringen ska du skriva en rapport.
+After optimization you should write a report.
 
-Exempel:
+Example:
 
 ```
 Performance Improvements Implemented:
@@ -1509,17 +1510,17 @@ Build:
 
 ---
 
-# KODKRAV
+# CODE REQUIREMENTS
 
-All kod måste vara:
+All code must be:
 - TypeScript
 - Next.js 14 App Router
-- Server Components när möjligt
-- Client Components endast vid behov
+- Server Components when possible
+- Client Components only when needed
 
 ---
 
-# SLUTRESULTAT SEO
+# FINAL RESULT SEO
 
 | System | Status |
 |--------|--------|
@@ -1530,29 +1531,29 @@ All kod måste vara:
 | Local SEO | ✅ |
 | Core Web Vitals | ✅ |
 | Semantic SEO | ✅ |
-| Topical Authority | 🔥 |
-| Entity SEO | 🔥 |
-| Internal Link Graph | 🔥 |
-| Schema Markup Advanced | 🔥 |
-| AI Crawl Optimization | 🔥 |
-| Crawl Budget Optimization | 🔥 |
-| SERP Rich Results | 🔥 |
-| Indexation Control | 🔥 |
-| Automatic SEO Audit | 🔥 |
+| Topical Authority | ADVANCED |
+| Entity SEO | ADVANCED |
+| Internal Link Graph | ADVANCED |
+| Schema Markup Advanced | ADVANCED |
+| AI Crawl Optimization | ADVANCED |
+| Crawl Budget Optimization | ADVANCED |
+| SERP Rich Results | ADVANCED |
+| Indexation Control | ADVANCED |
+| Automatic SEO Audit | ADVANCED |
 
 ---
 
-# SLUTRESULTAT PRESTANDA
+# FINAL RESULT PERFORMANCE
 
-Webbplatsen ska bli:
-- **snabbare**
-- **lättare**
-- **mer skalbar**
-- **bättre för Core Web Vitals**
+The website should become:
+- **faster**
+- **lighter**
+- **more scalable**
+- **better for Core Web Vitals**
 
-Utan att något i design eller innehåll förändras.
+Without anything in design or content changing.
 
-Målsättning:
+Target:
 - Lighthouse SEO: 100
 - Lighthouse Performance: 95+
 - Core Web Vitals: GOOD

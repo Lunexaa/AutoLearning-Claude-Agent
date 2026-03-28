@@ -5,7 +5,7 @@ description: JARVIS workflow v5.0 — autonomous multi-agent system. Tasks trigg
 
 # JARVIS WORKFLOW v5.0
 
-> Du ger mig en uppgift. Jag spinner upp agenter som brainstormar, bygger och kvalitetssäkrar. Du ser bara det färdiga resultatet.
+> You give me a task. I spin up agents that brainstorm, build, and quality-assure. You only see the finished result.
 
 **MASTER FLOW:**
 
@@ -55,16 +55,18 @@ Same as before — load ONLY what the task requires.
 | Task type | Load |
 |---|---|
 | **All sessions** | This file (already loaded) |
-| **Session start** | `modules/04-session.md` |
+| **Session start** | `modules/04-session.md` (selective knowledge priming) |
 | **BUILD / BUG / URGENT** | `modules/01-planning.md` + `modules/02-execution.md` + `modules/03-verification.md` |
-| **BUILD with brainstorm** | + `modules/10-brainstorm.md` (JARVIS Lite + Full only) |
-| **BUILD with UI** | + `modules/11-quality-gates.md` (automated perf/a11y/visual gates) |
+| **BUILD with brainstorm** | + `modules/10-brainstorm.md` (reference-first + brainstorm modes A-D) |
+| **BUILD with UI** | + `modules/11-quality-gates.md` (8 automated gates incl. TDD + terminal verify) |
 | **Full JARVIS (10+ files)** | + `modules/12-orchestration.md` (progress, rollback, handoff, hot-swap) |
+| **Autonomous execution** | + `modules/14-autonomous.md` (ralph loop, safety limits, circuit breakers) |
 | **REVIEW request** | `modules/03-verification.md` only |
+| **Deep research task** | `modules/13-deep-research.md` (5-hop protocol, confidence scoring) |
 | **New project / skill work** | `modules/08-skills.md` + BUILD modules |
 | **Multi-sprint project** | + `modules/06-pm.md` |
 | **Creating/updating memory** | `modules/05-memory.md` |
-| **Session end** | `modules/09-learning.md` + `modules/07-self-monitor.md` |
+| **Session end** | `modules/09-learning.md` (skill maturity tracking) + `modules/07-self-monitor.md` |
 | **RESEARCH / quick question** | No modules — answer directly |
 
 **Rule:** Never load a module that isn't needed. Context is finite.
@@ -136,7 +138,7 @@ Read ROADMAP.md → find matching skill → load it.
 | **AUTOMATION** | | |
 | n8n workflows | `n8n-automation` (→ sub-skill) | — |
 | Complex planning | `planning-with-files` | `planner` |
-| Deep research | `deep-research` | — |
+| Deep research | `deep-research` + `modules/13-deep-research.md` | — |
 | Codebase onboarding | `codebase-onboarding` | — |
 
 ### Step 2b: SKILL COMPLIANCE GATE
@@ -150,8 +152,8 @@ Skills with hard structural requirements:
 
 | Skill | MUST follow |
 |---|---|
-| `Landingpage` | Golden Folder, NO MONOLITH, `/content/`, CompanyCredit, 8-step flow, design quality standard |
-| `Hemsida` | Golden Folder, NO MONOLITH, CompanyCredit on ALL pages, 9-step flow, design quality standard |
+| `Landingpage` | Golden Folder, NO MONOLITH, `/content/`, BrandedFooter, 8-step flow, design quality standard |
+| `Hemsida` | Golden Folder, NO MONOLITH, BrandedFooter on ALL pages, 9-step flow, design quality standard |
 | `frontend-design` | Anti-AI-slop, bold direction, real images, no Inter/purple |
 | `shadcn-blocks` | Check catalog before building custom |
 | `nextjs-crm` | Prisma+Supabase, RLS, AES-256-GCM |
@@ -181,6 +183,7 @@ This is the core differentiator. Instead of one agent working linearly, **multip
 | Quick fix, ≤3 files, low risk | **Solo** — skip to PHASE 3 directly |
 | Feature, 4-10 files, medium risk | **JARVIS Lite** — skip PHASE 2 (brainstorm), do PHASE 1→3→4 |
 | Website, large feature, new project, 10+ files | **Full JARVIS** — all 5 phases |
+| Large well-defined task, user opts in | **Autonomous JARVIS** — Phase 1+2 interactive → Phase 3 autonomous (Module 14) → Phase 4+5 interactive |
 
 ### PHASE 1: INTEL (parallel agents, 15-30 sec)
 
@@ -203,7 +206,22 @@ Agent 3: CONTEXT LOADER
    this project."
 ```
 
-**Output:** Combined intel brief (1 paragraph) that informs PHASE 2.
+**Reference-First** (for BUILD tasks): Also spin up 2 reference agents → `modules/10-brainstorm.md` §1b
+```
+Agent R1: GITHUB SCOUT → 3+ high-quality repos matching task type
+Agent R2: PATTERN SCOUT → best practices, Awwwards/Godly refs (if visual)
+```
+Reference brief (50 words max) is injected into every Phase 2 agent's prompt.
+
+**Plan Lock:** After intel is complete, produce a written PLAN before proceeding:
+- List files to create/modify
+- List skill rules that must be followed
+- List success criteria
+- **Do NOT write code until plan exists.** Phase 2 brainstorms ON the plan, not on code.
+
+**Deep Research:** If task requires external knowledge → load `modules/13-deep-research.md` (5-hop protocol).
+
+**Output:** Combined intel brief (1 paragraph) + reference brief + plan outline that informs PHASE 2.
 
 ### PHASE 2: BRAINSTORM → load `modules/10-brainstorm.md`
 
@@ -261,8 +279,9 @@ No agents — implement directly. Still follow skill rules.
 
 **Step 1: Automated gates** (0 tokens, run via bash) → load `modules/11-quality-gates.md`
 ```
-BUILD CHECK → REGRESSION TESTS → ACCESSIBILITY → PERFORMANCE → IMAGE URLS → KAREN VALIDATOR
+BUILD CHECK → REGRESSION TESTS → TDD ENFORCER → TERMINAL VERIFICATION → ACCESSIBILITY → PERFORMANCE → IMAGE URLS → KAREN VALIDATOR
 ```
+**Terminal Verification is MANDATORY** — fresh `npm run build && npm test` output proving it works. No hedging ("should work") — only concrete proof.
 If any automated gate fails → fix before spawning expensive agent reviewers.
 
 **Step 2: Agent review** (only if automated gates pass). Spin up in ONE message:
@@ -366,6 +385,10 @@ Every token costs money. Every agent spawn costs 2-5K tokens. Optimize ruthlessl
 - **AUTO-ROUTE** — match to skill/agent/MCP automatically
 - **DESIGN = REAL IMAGES + DEPTH + WOW** — read feedback_design.md, always
 - **ROLLBACK, NOT LOOP** — if fix fails 3x, rollback and try different approach (Module 12 §2)
+- **REFERENCE-FIRST** — search GitHub + patterns before building, don't reinvent (Module 10 §1b)
+- **TERMINAL PROOF** — fresh terminal output required, never hedge (Module 11 §3c)
+- **PLAN BEFORE CODE** — no code until a written plan exists (Phase 1 plan lock)
+- **MATURITY MATTERS** — route to HARDENED/CRYSTALLIZED skills over DRAFT when possible (Module 09 §4d)
 
 ---
 
@@ -373,7 +396,7 @@ Every token costs money. Every agent spawn costs 2-5K tokens. Optimize ruthlessl
 
 **Process:** Skipping brainstorm for complex tasks · Showing user unreviewed work · Running agents sequentially when they can be parallel · Skipping PHASE 4 review because "it looks fine"
 
-**Design:** Flat placeholder UI · Emojis as images · Inter/Roboto · Purple gradients · Rounded-everything · Missing company credit footer · Not verifying image URLs
+**Design:** Flat placeholder UI · Emojis as images · Inter/Roboto · Purple gradients · Rounded-everything · Missing branded footer · Not verifying image URLs
 
 **Execution:** Loading skill but ignoring its rules · Scope drift · Fixing a fix · `migrate dev` on Supabase · `chromium-min` on Vercel · Serializing parallel calls
 

@@ -35,7 +35,7 @@ git stash push -m "jarvis-checkpoint-$(date +%s)" 2>/dev/null || true
 **Rollback triggers:**
 - Phase 4 quality gate fails 3 times on same issue
 - Compound error detected (fixing a fix of a fix)
-- User says "start over" or "det blev fel"
+- User says "start over" or "something went wrong"
 
 **Rollback action:**
 ```bash

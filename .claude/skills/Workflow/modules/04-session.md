@@ -7,11 +7,33 @@
 
 1. Read `~/.claude/Memory/MEMORY.md` — identify which 2-3 files are relevant to today's task
 2. Read ONLY those files (not all of them)
-3. Check `tasks/todo.md` in current project — incomplete items? → go to Section 3 (Session Resume)
-4. Scan `tasks/lessons.md` for patterns matching today's task type
-5. Silent Ruflo health check if complex task expected: `ruflo doctor 2>/dev/null`
+3. **Selective Knowledge Priming** — match memories to context:
+   - Identify which files/directories will likely be touched
+   - Load ONLY memory entries that relate to those files or that domain
+   - If task is frontend → load `feedback_design.md`, skip backend memories
+   - If task is backend → load `feedback_dev.md`, skip design memories
+   - If task is new domain → load `routing-overrides.md` for learned routes
+4. Check `tasks/todo.md` in current project — incomplete items? → go to Section 3 (Session Resume)
+5. Scan `tasks/lessons.md` for patterns matching today's task type
+6. Silent Ruflo health check if complex task expected: `ruflo doctor 2>/dev/null`
 
 **Result:** You enter with exactly the context needed. Nothing more.
+
+**Priming decision tree:**
+```
+TASK RECEIVED
+  ↓
+What domain? → [frontend | backend | fullstack | devops | research | other]
+  ↓
+Which files will change? → git diff --stat OR inferred from task description
+  ↓
+Load memories that match:
+  - Domain-specific feedback (feedback_design.md, feedback_dev.md, etc.)
+  - File-specific lessons (grep tasks/lessons.md for touched paths)
+  - Routing overrides (always — it's tiny)
+  ↓
+Skip everything else.
+```
 
 ---
 
@@ -48,6 +70,41 @@
 
 ---
 
+## 2b. PERSISTENT MEMORY — SESSION CAPTURE
+
+Every session generates knowledge. Capture it systematically, not just when you remember.
+
+### Auto-capture triggers (check at session end):
+| What happened | Memory action |
+|---|---|
+| Bug fixed | Log root cause + fix to `tasks/lessons.md` |
+| New pattern discovered | Append to relevant `feedback_*.md` in Memory |
+| Skill worked well (score ≥ 4) | Log signal to `routing-signals.md` |
+| Skill failed (score ≤ 2) | Log signal + lesson to `routing-signals.md` |
+| User corrected approach | Create/update `feedback_*.md` — this is gold |
+| User confirmed approach worked | Also log — positive signals prevent drift |
+| Architecture decision made | Log to `tasks/lessons.md` with rationale |
+
+### Memory compression rules:
+- Keep entries under 3 sentences — dense, not verbose
+- Lead with the actionable rule, follow with the reason
+- Use absolute dates, not "yesterday" or "last week"
+- Tag entries with domain: `[frontend]`, `[backend]`, `[design]`, `[devops]`
+
+### What NOT to capture:
+- Ephemeral debugging steps (the fix is in the code)
+- Code snippets (the code is in the repo)
+- Things already in CLAUDE.md or skill files
+- Task-specific details with no future value
+
+### Memory hygiene (run monthly or when routing-signals.md > 50 entries):
+1. Archive signals older than 90 days (move to `routing-signals-archive.md`)
+2. Promote any lesson that appears 3+ times to permanent `feedback_*.md`
+3. Remove contradictory entries (keep the most recent)
+4. Verify memory file references still point to existing files
+
+---
+
 ## 3. SESSION RESUME PROTOCOL
 
 Run when `tasks/todo.md` has incomplete items from a previous session.
@@ -71,12 +128,15 @@ Run when task completes or session ends naturally.
 1. Did we learn something new this session?
 2. Did we discover a pattern/technique missing from an existing skill?
 3. Was a mistake made that could happen again?
+4. Did the user correct or confirm my approach? (→ feedback memory)
 
 ### If yes:
 - New topic → create skill (08-skills §B) + update ROADMAP
 - New within existing area → append to skill (08-skills §C)
 - Mistake, project-only → log to `tasks/lessons.md`
 - Mistake, cross-project → log + promote to `~/.claude/Memory/feedback_*.md`
+- User correction → create/update `feedback_*.md` with rule + reason (highest-value memory)
+- User confirmation of non-obvious approach → log positive signal to prevent drift
 
 ### Load `modules/07-self-monitor.md` → log session adherence score
 

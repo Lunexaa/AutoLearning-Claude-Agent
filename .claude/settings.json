@@ -5,10 +5,33 @@
     ]
   },
   "effortLevel": "high",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'TDD reminder: ensure tests exist for new functionality'"
+          }
+        ]
+      }
+    ]
+  },
   "mcpServers": {
+    "ruflo": {
+      "command": "ruflo",
+      "args": [
+        "mcp",
+        "start"
+      ]
+    },
     "supabase": {
       "command": "npx",
-      "args": ["-y", "supabase-mcp-server"],
+      "args": [
+        "-y",
+        "supabase-mcp-server"
+      ],
       "env": {
         "SUPABASE_URL": "${SUPABASE_URL}",
         "SUPABASE_SERVICE_ROLE_KEY": "${SUPABASE_SERVICE_ROLE_KEY}"
@@ -16,20 +39,51 @@
     },
     "playwright": {
       "command": "npx",
-      "args": ["-y", "@anthropic-ai/playwright-mcp"]
+      "args": [
+        "-y",
+        "@anthropic-ai/playwright-mcp"
+      ]
     },
     "github": {
       "command": "npx",
-      "args": ["-y", "@anthropic-ai/github-mcp-server"],
+      "args": [
+        "-y",
+        "@anthropic-ai/github-mcp-server"
+      ],
       "env": {
         "GITHUB_TOKEN": "${GITHUB_TOKEN}"
       }
     },
+    "meta-ads": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "meta-ads-mcp"
+      ],
+      "env": {
+        "META_ACCESS_TOKEN": "${META_ACCESS_TOKEN}",
+        "META_APP_ID": "${META_APP_ID}",
+        "META_APP_SECRET": "${META_APP_SECRET}"
+      }
+    },
     "firecrawl": {
       "command": "npx",
-      "args": ["-y", "firecrawl-mcp"],
+      "args": [
+        "-y",
+        "firecrawl-mcp"
+      ],
       "env": {
         "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
+      }
+    },
+    "google-search-console": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-gsc"
+      ],
+      "env": {
+        "GSC_CREDENTIALS_PATH": "${GSC_CREDENTIALS_PATH}"
       }
     }
   }

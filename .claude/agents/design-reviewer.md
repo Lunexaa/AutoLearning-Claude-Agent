@@ -16,7 +16,7 @@ You receive: a list of changed/created component files.
 ### CRITICAL (score 0 if any fail)
 - [ ] **Real images** — no placeholder divs, emojis, or colored boxes used as visuals
 - [ ] **All image URLs work** — `curl -s -o /dev/null -w "%{http_code}" [url]` returns 200
-- [ ] **Branded footer** — if `Landingpage` or `Hemsida` skill active, `BrandedFooter` component must exist and be rendered
+- [ ] **Branded footer** — if `Landingpage` or `Hemsida` skill active, a `BrandedFooter` component must exist and be rendered
 - [ ] **No monolith** — page.tsx has only imports, no inline sections
 
 ### HIGH (each failed = -1 point)
