@@ -1,0 +1,6 @@
+# Don't track user-specific memory content
+.claude/Memory/L2-working/
+.claude/Memory/L5-self-healing/
+*.local
+.DS_Store
+node_modules/
