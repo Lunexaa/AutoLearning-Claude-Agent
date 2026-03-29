@@ -1,4 +1,4 @@
-# MODULE 05 — MEMORY SYSTEM & GC
+# MODULE 05 — MEMORY SYSTEM & 3-TIER ARCHITECTURE
 # Loaded for: creating/updating memory files
 
 ---
@@ -9,26 +9,64 @@
 ```
 ALWAYS here. NEVER in project folders or `~/.claude/projects/`.
 
-## 2. Types
-| Type | Example | When |
-|---|---|---|
-| `user` | `user_profile.md` | Role, preferences, style |
-| `feedback` | `feedback_dev.md` | Corrections + confirmed approaches |
-| `project` | `project_zenitcrm.md` | Stack, status, key decisions |
-| `reference` | `reference_apis.md` | Where to find external things |
+---
 
-## 3. Format
+## 2. 3-TIER ARCHITECTURE
+
+Memory is organized into three tiers. Each tier serves a different time horizon and access pattern.
+
+### Tier 1: WORKING (in-session, project-scoped)
+**Purpose:** Active project state and recent decisions you need RIGHT NOW.
+**Scope:** Per-project, cleared between projects (or kept in project .claude/ folder)
+**Retention:** Current session + occasional cross-session review
+**Files:**
+- `project_*.md` — Stack, status, key technical decisions for a project
+- `session-notes.md` — Live memory written during work + pre-compaction capture (Module 15 §1)
+- Branch memory in `branches/[branch-name].md` (Module 15 §6)
+
+**Access:** Loaded at session start for the active project.
+
+### Tier 2: VAULT (persistent, cross-project rules)
+**Purpose:** Rules, patterns, and user identity that apply ACROSS projects.
+**Scope:** Global — applies to all future work
+**Retention:** Permanent (never auto-deleted; user manually archives)
+**Files:**
+- `user_profile.md` — Who you are, your working style, preferences
+- `feedback_*.md` — Dev patterns, design standards, token efficiency, communication style
+- `instincts.md` — Behavioral rules that fire on pattern recognition (Module 15 §4)
+
+**Access:** Loaded at session start, always.
+
+### Tier 3: SIGNALS (learning data, analyzed offline)
+**Purpose:** Routing intelligence and pattern discovery for future improvement.
+**Scope:** Global — used to optimize skill matching and auto-generate instincts
+**Retention:** Historical, decayed over time (older signals get half weight)
+**Files:**
+- `routing-signals.md` — Task execution scores (skill match quality, first-try success)
+- `routing-overrides.md` — Learned route overrides discovered from signal analysis
+- Pattern mining outputs (cross-project lessons, auto-generated instinct candidates)
+
+**Access:** Loaded at session start for routing decisions. Analyzed at session end (Module 09 §11, §12).
+
+---
+
+## 3. File Format
+
+All memory files (Tiers 1, 2, 3) follow this optional header:
 ```markdown
 ---
 name: memory-name
 description: one-line description
-type: user | feedback | project | reference
+type: working | vault | signals
 ---
 [ultra-compressed bullet content]
 ```
 
-## 4. MEMORY.md index
-`~/.claude/Memory/MEMORY.md` — links + one-line descriptions only.
+---
+
+## 4. MEMORY.md Index
+
+`~/.claude/Memory/MEMORY.md` — links + one-line descriptions organized by tier.
 Max 200 lines. Update every time a file is created or changed.
 
 ---

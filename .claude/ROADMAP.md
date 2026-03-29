@@ -1,22 +1,22 @@
-# SKILL ROADMAP — JARVIS v5.0
+# SKILL ROADMAP — AutoLearning Claude Agent
 Last updated: 2026-03-28
 
-> **533 skills installed.** You don't need to read this file — JARVIS auto-matches skills via their `description` frontmatter.
-> This ROADMAP exists for: (1) manual lookup if auto-match misses, (2) understanding what's available, (3) updating when new skills are added.
+> **533 skills installed.** Du behöver inte läsa denna fil — AutoLearning auto-matchar skills via deras `description` i frontmatter.
+> Denna ROADMAP finns för: (1) manuell sökning om auto-match missar, (2) förstå vad som finns, (3) uppdatering vid nya skills.
 
 ---
 
 ## HOW AUTO-ROUTING WORKS
 
-Claude Code reads each skill's `description` field automatically. When you give a task, it's matched against all 533 skills without consulting ROADMAP. ROADMAP is a backup, not the primary router.
+Claude Code läser varje skills `description` fält automatiskt. När du ger en uppgift matchas den mot alla 533 skills utan att ROADMAP behöver konsulteras. ROADMAP är backup, inte primär router.
 
 ---
 
-## CATEGORY INDEX (533 skills, 310 agents, 14 modules, 12 commands, 7 MCP)
+## CATEGORY INDEX (533 skills, 310 agents, 15 modules, 12 commands, 7 MCP)
 
 ### WORKFLOW & PROCESS (8 skills)
 Core workflow, planning, verification, context management.
-**Key:** `workflow` (JARVIS v5.0 — 14 modules: planning, execution, verification, session, memory, PM, self-monitor, skills, learning+maturity, brainstorm+reference-first+adversarial-spec, quality-gates+TDD+terminal-verify, orchestration, deep-research, autonomous-mode) · `planning-with-files` · `context-budget` · `verification-loop` · `verification-before-completion` · `strategic-compact` · `continuous-learning-v2` · `agentic-engineering`
+**Key:** `workflow` (AutoLearning Claude Agent — 15 modules: planning, execution, verification, session, memory, PM, self-monitor, skills, learning+maturity, brainstorm+reference-first+adversarial-spec, quality-gates+TDD+terminal-verify, orchestration, deep-research, autonomous-mode, session-intelligence) · `planning-with-files` · `context-budget` · `verification-loop` · `verification-before-completion` · `strategic-compact` · `continuous-learning-v2` · `agentic-engineering`
 
 ### FRONTEND & UI (35+ skills)
 React, Next.js, Tailwind, shadcn, animation, design systems, responsive, performance.
@@ -65,7 +65,7 @@ Skill creation, auditing, compliance, prompt optimization.
 
 ---
 
-## AGENTS (310 — auto-dispatched via JARVIS protocol, matched by description)
+## AGENTS (310 — auto-dispatched via AutoLearning protocol, matched by description)
 
 ### Brainstorm Team (PHASE 2)
 `architect` (opus) · `ui-designer` (opus) · `planner` (opus)

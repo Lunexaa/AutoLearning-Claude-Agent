@@ -16,7 +16,7 @@ Structured, multi-hop research that goes beyond a single web search. Instead of 
 |---|---|
 | User asks for research / analysis | Full protocol (all 5 hops) |
 | Phase 1 INTEL needs external context | Lite protocol (3 hops max) |
-| "Deep research" or "investigate" in prompt | Full protocol |
+| "Deep research" or "undersök" in prompt | Full protocol |
 | Quick factual question | Skip — answer directly |
 
 **Rule:** Don't deep-research what you already know with high confidence. This protocol is for unknowns.
@@ -146,7 +146,7 @@ Lite protocol:
 
 ---
 
-## 8. INTEGRATION WITH JARVIS
+## 8. INTEGRATION WITH AutoLearning
 
 | Context | How deep research plugs in |
 |---|---|

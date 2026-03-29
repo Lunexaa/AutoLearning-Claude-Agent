@@ -63,7 +63,7 @@ Update ROADMAP.md "What it does" if addition is significant.
 
 ## D. PROJECT INIT
 
-Run when user says "new project", "start project", "init project", "start building":
+Run when user says "new project", "nytt projekt", "start project", "börja bygga":
 
 ```
 ~/Desktop/Agent/Projekt/<ProjectName>/

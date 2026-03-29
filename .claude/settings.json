@@ -12,7 +12,29 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'TDD reminder: ensure tests exist for new functionality'"
+            "command": "bash ~/.claude/hooks/tdd-gate.sh 2>/dev/null || echo 'TDD: ensure tests exist for new functionality'"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/precompact-diary.sh 2>/dev/null; exit 0"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/ultrawork-inject.sh 2>/dev/null; exit 0"
           }
         ]
       }

@@ -142,3 +142,40 @@ Run when task completes or session ends naturally.
 
 **Rule:** Every session must leave the system smarter than it started.
 A successful session with no learning is a missed opportunity.
+
+---
+
+## 5. CONTEXT-CLEAR-BETWEEN-TASKS
+
+When completing one task and starting another in the same session, actively reset context.
+
+**The problem:** Context pollution. After debugging a complex issue, the debugging context (error messages, failed approaches, stack traces) stays in the conversation. When the user asks about a new feature, Claude "sees" phantom problems from the old context — suggesting fixes for things that aren't broken.
+
+**Detection triggers:**
+- User gives a new instruction unrelated to the previous task
+- Topic shift > 70% from current conversation focus
+- User explicitly says "new task", "next", "something else", "different topic"
+- Previous task was marked complete (via KAREN validator or user confirmation)
+
+**Context reset procedure:**
+1. Write current task summary to session-notes.md (Module 15 §1) — preserve learnings
+2. Log completion signal to routing-signals.md (Module 09 §1)
+3. Mentally reset: stop referencing files, errors, and patterns from the completed task
+4. Re-read MEMORY.md index — identify which 2-3 files are relevant to the NEW task
+5. Load fresh context for the new task (selective knowledge priming, §1 of this module)
+6. Begin the new task as if it's a fresh session
+
+**What to carry forward:**
+- Instincts (always active — Module 15 §4)
+- Project-level knowledge (THEORY.md, branch memory)
+- Napkin entries (they're always relevant)
+
+**What to drop:**
+- Debugging context from previous task
+- File contents loaded for the previous task
+- Error messages and stack traces from previous task
+- Temporary patterns that were specific to the previous task
+
+**Hard rule:** If session > 25 turns AND user starts a new unrelated task → strongly recommend starting a new conversation. Context pollution is real and degrades output quality.
+
+**Anti-pattern:** Carrying debugging context into a new feature discussion. If Claude says "we should also check for the null pointer issue from earlier" during a new CSS styling task — context pollution has occurred.

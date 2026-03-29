@@ -1,6 +1,6 @@
-# Self-Test — JARVIS v5.0 System Integrity Validator
+# Self-Test — AutoLearning v5.0 System Integrity Validator
 
-Run a comprehensive diagnostic of the entire JARVIS system. Checks structural integrity, cross-references, and configuration health across all components.
+Run a comprehensive diagnostic of the entire AutoLearning system. Checks structural integrity, cross-references, and configuration health across all components.
 
 ## Execution
 
@@ -101,9 +101,9 @@ for name, cfg in d.get('mcpServers', {}).items():
 "
 ```
 
-### CHECK 7: JARVIS Protocol Integrity
+### CHECK 7: AutoLearning Protocol Integrity
 ```bash
-echo "=== JARVIS PROTOCOL ==="
+echo "=== AutoLearning PROTOCOL ==="
 wf=~/.claude/skills/Workflow/SKILL.md
 for phase in "PHASE 1" "PHASE 2" "PHASE 3" "PHASE 4" "PHASE 5"; do
   if grep -q "$phase" "$wf"; then echo "✅ $phase defined"; else echo "❌ $phase MISSING"; fi
@@ -126,7 +126,7 @@ if grep -q "5-Layer" ~/.claude/Memory/MEMORY.md; then echo "✅ MEMORY.md has 5-
 ```bash
 echo "=== CROSS-REFERENCES ==="
 # CLAUDE.md references Workflow
-if grep -q "JARVIS" ~/.claude/CLAUDE.md; then echo "✅ CLAUDE.md → JARVIS"; else echo "❌ CLAUDE.md missing JARVIS ref"; fi
+if grep -q "AutoLearning" ~/.claude/CLAUDE.md; then echo "✅ CLAUDE.md → AutoLearning"; else echo "❌ CLAUDE.md missing AutoLearning ref"; fi
 # CLAUDE.md references Skill Compliance Gate
 if grep -q "SKILL COMPLIANCE GATE" ~/.claude/CLAUDE.md; then echo "✅ CLAUDE.md → Compliance Gate"; else echo "❌ CLAUDE.md missing gate"; fi
 # CLAUDE.md references Design Tribunal
@@ -150,7 +150,7 @@ After running all checks, produce a scorecard:
 
 ```
 ╔══════════════════════════════════════════╗
-║         JARVIS v5.0 SELF-TEST           ║
+║         AutoLearning v5.0 SELF-TEST           ║
 ╠══════════════════════════════════════════╣
 ║ Core files:        XX/XX  ✅/❌          ║
 ║ Skills:            XXX installed         ║
@@ -160,7 +160,7 @@ After running all checks, produce a scorecard:
 ║ Skill integrity:   XX orphan dirs        ║
 ║ Agent frontmatter: XX% coverage          ║
 ║ Version sync:      ✅/❌                  ║
-║ JARVIS protocol:   X/7 phases OK         ║
+║ AutoLearning protocol:   X/7 phases OK         ║
 ║ Memory tiers:      X/5 present           ║
 ║ Cross-references:  X/4 connected         ║
 ║ Self-learning:     ✅/❌ connected        ║

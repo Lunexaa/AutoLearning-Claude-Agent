@@ -1,9 +1,9 @@
 ---
 name: workflow
-description: JARVIS workflow v5.0 — autonomous multi-agent system. Tasks trigger parallel brainstorm → best approach selected → specialist agents build in parallel → multi-reviewer chain catches errors before user sees result. 533 skills, 310 agents, 7 MCP servers.
+description: AutoLearning Claude Agent — autonomous multi-agent system with self-learning routing, 6 brainstorm modes, 10 automated quality gates, pattern mining, and session intelligence. 533 skills, 310 agents, 15 modules, 7 MCP servers.
 ---
 
-# JARVIS WORKFLOW v5.0
+# AUTOLEARNING CLAUDE AGENT
 
 > You give me a task. I spin up agents that brainstorm, build, and quality-assure. You only see the finished result.
 
@@ -16,23 +16,27 @@ SESSION START → INTENT → AUTO-ROUTE (skills + agents + MCP)
     ↓
 SKILL COMPLIANCE GATE
     ↓
-┌─── JARVIS PROTOCOL ──────────────────────────────────┐
+┌─── AUTOLEARNING PROTOCOL ──────────────────────────────────┐
 │                                                        │
 │  PHASE 1: INTEL (parallel)                             │
 │  ├─ Research agent → best practices, competitors       │
 │  ├─ Skill reader → extract all rules & constraints     │
 │  └─ Memory loader → relevant project context           │
 │                                                        │
-│  PHASE 2: BRAINSTORM (parallel, 3 perspectives)        │
+│  PHASE 2: BRAINSTORM (parallel, 3-8 agents)             │
 │  ├─ Architect agent → approach A (structure-first)      │
 │  ├─ Creative agent → approach B (design-first)         │
-│  └─ Pragmatist agent → approach C (speed-first)        │
+│  ├─ Pragmatist agent → approach C (speed-first)        │
+│  └─ User Advocate → end-user perspective (all modes)   │
 │  → Auto-select best OR present top 2 to user           │
 │                                                        │
 │  PHASE 3: BUILD (parallel specialists)                 │
 │  ├─ Frontend agent(s)                                  │
 │  ├─ Backend agent(s)                                   │
 │  └─ Design agent                                       │
+│                                                        │
+│  PHASE 3.5: UNIFY (Full AutoLearning only)                   │
+│  └─ Compare plan vs actual, log deviations             │
 │                                                        │
 │  PHASE 4: REVIEW CHAIN (parallel, then gate)           │
 │  ├─ Code reviewer → quality + patterns                 │
@@ -54,12 +58,12 @@ Same as before — load ONLY what the task requires.
 
 | Task type | Load |
 |---|---|
-| **All sessions** | This file (already loaded) |
-| **Session start** | `modules/04-session.md` (selective knowledge priming) |
+| **All sessions** | This file (already loaded) + `modules/15-session-intelligence.md` §1,§4 (napkin, instincts) |
+| **Session start** | `modules/04-session.md` (selective knowledge priming) + Module 15 §4-§6 (recall, branch memory, theory) |
 | **BUILD / BUG / URGENT** | `modules/01-planning.md` + `modules/02-execution.md` + `modules/03-verification.md` |
 | **BUILD with brainstorm** | + `modules/10-brainstorm.md` (reference-first + brainstorm modes A-D) |
 | **BUILD with UI** | + `modules/11-quality-gates.md` (8 automated gates incl. TDD + terminal verify) |
-| **Full JARVIS (10+ files)** | + `modules/12-orchestration.md` (progress, rollback, handoff, hot-swap) |
+| **Full AutoLearning (10+ files)** | + `modules/12-orchestration.md` (progress, rollback, handoff, hot-swap) |
 | **Autonomous execution** | + `modules/14-autonomous.md` (ralph loop, safety limits, circuit breakers) |
 | **REVIEW request** | `modules/03-verification.md` only |
 | **Deep research task** | `modules/13-deep-research.md` (5-hop protocol, confidence scoring) |
@@ -91,7 +95,7 @@ Same as before — load ONLY what the task requires.
 | New project | `NEW_PROJECT` | Load 08-skills + 06-pm + BUILD modules |
 | Bug report | `BUG` | BUILD modules → 01-planning §BUG |
 | Quick fix ≤2 steps | `URGENT` | Skip to PHASE 3 (solo, no brainstorm) |
-| Feature / build | `BUILD` | Full JARVIS PROTOCOL |
+| Feature / build | `BUILD` | Full AUTOLEARNING PROTOCOL |
 | Code review | `REVIEW` | PHASE 4 only |
 | Question | `RESEARCH` | Answer directly |
 | Unclear | `UNCLEAR` | Clarify ONCE, then route |
@@ -172,18 +176,18 @@ Skills with hard structural requirements:
 
 ---
 
-## 2. THE JARVIS PROTOCOL
+## 2. THE AUTOLEARNING PROTOCOL
 
 This is the core differentiator. Instead of one agent working linearly, **multiple agents work in parallel at every phase.**
 
-### When to activate JARVIS vs Solo
+### When to activate AutoLearning vs Solo
 
 | Complexity | Approach |
 |---|---|
 | Quick fix, ≤3 files, low risk | **Solo** — skip to PHASE 3 directly |
-| Feature, 4-10 files, medium risk | **JARVIS Lite** — skip PHASE 2 (brainstorm), do PHASE 1→3→4 |
-| Website, large feature, new project, 10+ files | **Full JARVIS** — all 5 phases |
-| Large well-defined task, user opts in | **Autonomous JARVIS** — Phase 1+2 interactive → Phase 3 autonomous (Module 14) → Phase 4+5 interactive |
+| Feature, 4-10 files, medium risk | **AutoLearning Lite** — skip PHASE 2 (brainstorm), do PHASE 1→3→4 |
+| Website, large feature, new project, 10+ files | **Full AutoLearning** — all 5 phases |
+| Large well-defined task, user opts in | **Autonomous AutoLearning** — Phase 1+2 interactive → Phase 3 autonomous (Module 14) → Phase 4+5 interactive |
 
 ### PHASE 1: INTEL (parallel agents, 15-30 sec)
 
@@ -206,12 +210,11 @@ Agent 3: CONTEXT LOADER
    this project."
 ```
 
-**Reference-First** (for BUILD tasks): Also spin up 2 reference agents → `modules/10-brainstorm.md` §1b
-```
-Agent R1: GITHUB SCOUT → 3+ high-quality repos matching task type
-Agent R2: PATTERN SCOUT → best practices, Awwwards/Godly refs (if visual)
-```
-Reference brief (50 words max) is injected into every Phase 2 agent's prompt.
+**Reference-First** (for BUILD tasks): The RESEARCHER agent (above) now includes reference search:
+- GitHub: 3+ high-quality repos matching task type
+- Patterns: best practices, Awwwards/Godly refs (if visual)
+- Reference context injected into every Phase 2 agent's prompt
+- No separate reference agents needed (merged into Phase 1 Researcher)
 
 **Plan Lock:** After intel is complete, produce a written PLAN before proceeding:
 - List files to create/modify
@@ -227,12 +230,15 @@ Reference brief (50 words max) is injected into every Phase 2 agent's prompt.
 
 | Task type | Mode | Agents | Detail |
 |---|---|---|---|
-| Backend/API/DB | **Mode A: Standard** | 3 | Architect + Creative + Pragmatist |
-| UI/website/design | **Mode B: Design Tribunal** | 6 | 5 design perspectives + Red Team |
-| Backend architecture | **Mode C: Backend Tribunal** | 5 | Scale + Security + DX + Cost + Red Team |
+| Backend/API/DB | **Mode A: Standard** | 4 | Architect + Creative + Pragmatist + User Advocate |
+| UI task ≤5 files | **Mode B-Lite: Design Duet** | 3 | Minimalist + Conversion Hawk + User Advocate |
+| UI/website/design 5+ files | **Mode B: Design Tribunal** | 8 | 6 design + Accessibility + User Advocate |
+| Backend architecture | **Mode C: Backend Tribunal** | 6 | Scale + Security + DX + Cost + Red Team + User Advocate |
+| Spec/PRD/design doc | **Mode D: Adversarial Spec** | 3 | Author + Critic + Defender |
+| Mobile/Data/API/Security | **Mode E: Domain-Specific** | 3 | Specialized per domain |
 
-All modes include: **User Persona injection** (end-user context in every agent prompt), **Devil's Advocate** round if confidence < 80%, max 1 refinement round.
-Judge builds hybrid from best elements — never picks one wholesale.
+All modes include: **User Advocate** (end-user perspective agent), **Constraint Injection** (hard limits injected into every prompt), **Challenger** (post-selection stress test — replaces Devil's Advocate + Falsification).
+Judge uses weighted scoring rubric (Impact 40%, Uniqueness 25%, Feasibility 20%, Conversion 15%) — never picks one approach wholesale.
 
 ### PHASE 3: BUILD (parallel specialists)
 
@@ -275,11 +281,25 @@ No agents — implement directly. Still follow skill rules.
 - Am I still on the plan?
 - Did I introduce regressions?
 
+### PHASE 3.5: UNIFY (reconcile plan vs reality)
+
+After BUILD completes, before REVIEW starts:
+1. Re-read the plan from Phase 1
+2. Compare: what was planned vs what was actually built
+3. Log deviations to `tasks/unify-report.md`:
+   - Files planned but not created
+   - Files created but not planned (scope creep?)
+   - Requirements met vs missed
+4. If deviation > 20% → flag for user before proceeding to review
+5. If deviation ≤ 20% → proceed to Phase 4 with deviation notes
+
+**Skip for:** Solo mode, AutoLearning Lite (no formal plan to compare against)
+
 ### PHASE 4: REVIEW CHAIN (automated gates → agent review → quality gate)
 
 **Step 1: Automated gates** (0 tokens, run via bash) → load `modules/11-quality-gates.md`
 ```
-BUILD CHECK → REGRESSION TESTS → TDD ENFORCER → TERMINAL VERIFICATION → ACCESSIBILITY → PERFORMANCE → IMAGE URLS → KAREN VALIDATOR
+BUILD CHECK → SPEC COMPLIANCE → TERMINAL VERIFICATION → REGRESSION TESTS → TDD ENFORCER → DEPENDENCY AUDIT → SMOKE TEST → ACCESSIBILITY → PERFORMANCE → IMAGE URLS
 ```
 **Terminal Verification is MANDATORY** — fresh `npm run build && npm test` output proving it works. No hedging ("should work") — only concrete proof.
 If any automated gate fails → fix before spawning expensive agent reviewers.
@@ -291,11 +311,20 @@ DESIGN-REVIEWER (sonnet)  → feedback_design.md standards, wow factor
 SECURITY-REVIEWER (sonnet) → secrets, auth, XSS, env vars
 ```
 
+**Step 3: Critic/Fixer loop** (only if Step 2 finds issues)
+```
+Critic agent (sonnet): re-examines specific issues from Step 2
+Fixer agent (sonnet): implements exact fixes for critic's findings
+→ Critic re-checks → approve OR loop (max 5 rounds)
+If approved after round N: proceed to quality gate
+If 5 rounds exhausted: escalate to user with full history
+```
+
 **Quality gate (all must pass):**
 
 | Gate | Pass | If fail |
 |---|---|---|
-| Automated (Step 1) | All 6 gates pass | Fix, re-run only failed gate |
+| Automated (Step 1) | All 10 gates pass | Fix, re-run only failed gate |
 | Code review | 0 CRITICAL, ≤2 HIGH | Fix before showing user |
 | Design review | Score ≥ 7/10 | Fix visual issues |
 | Security review | 0 CRITICAL | Fix immediately |
@@ -304,20 +333,44 @@ SECURITY-REVIEWER (sonnet) → secrets, auth, XSS, env vars
 
 **Hot-swap:** If an agent returns poor output (< 2/5), swap to alternative agent (Module 12 §4). Max 1 swap per role.
 
+### PHASE 4.5: ESCALATION CHECK (Full AutoLearning only)
+
+Before delivering, classify task status using 4-level escalation (Module 12 §9):
+
+| Status | Action |
+|--------|--------|
+| **DONE** | Proceed to DELIVER — all clean |
+| **DONE_WITH_CONCERNS** | Deliver with flagged concerns: "Complete. Concern: [X]. Risk: [Y]." |
+| **NEEDS_CONTEXT** | Pause, ask ONE specific question, resume after answer |
+| **BLOCKED** | Stop, present diagnosis + alternatives. Classify root cause: intent/spec/code |
+
+Skip for: Solo, AutoLearning Lite
+
 ### PHASE 5: DELIVER
 
 1. Present clean result to user
 2. Brief status (what was built, files changed)
-3. No summaries of process — user doesn't need to know 6 agents worked on this
-4. Log learnings to `tasks/lessons.md` if applicable
+3. Auto-generate changelog entry: `git log --oneline [start]..HEAD`
+4. Suggest version bump if package.json exists (PATCH/MINOR/MAJOR)
+5. No summaries of internal process — user doesn't need to know agents worked on this
+6. Log learnings to session-notes.md + routing-signals.md
+
+### PHASE 5.5: LESSONS LEARNED (Full AutoLearning only)
+
+After delivery, capture what was learned:
+1. Compare planned scope vs actual scope
+2. What took longer than expected? What patterns worked?
+3. Update routing-signals.md with skill scores
+4. If friction pattern appears 3+ times → propose new instinct (Module 15 §3 Instincts)
+5. If same lesson appears in 2+ projects → promote to Tier 2 VAULT feedback file
 
 ---
 
 ## 3. AGENT ROSTER (310 agents — auto-matched by description)
 
-310 agents installed in `~/.claude/agents/`. They are matched automatically via their `description` frontmatter, same as skills. Only key agents per JARVIS phase are listed here — the rest dispatch on-demand when task domain matches.
+310 agents installed in `~/.claude/agents/`. They are matched automatically via their `description` frontmatter, same as skills. All inherit common behaviors from `BASE-AGENT.md`. Only key agents per AutoLearning phase are listed here — the rest dispatch on-demand when task domain matches.
 
-### JARVIS Core Agents (used in every full JARVIS run)
+### AutoLearning Core Agents (used in every full run)
 
 **PHASE 2 — Brainstorm:** `architect` (opus) · `ui-designer` (opus) · `planner` (opus)
 
@@ -325,7 +378,7 @@ SECURITY-REVIEWER (sonnet) → secrets, auth, XSS, env vars
 
 **PHASE 3 — Full-stack builds:** `fullstack-developer` · `api-designer` · `database-reviewer`
 
-**PHASE 4 — Review chain:** `code-reviewer` · `typescript-reviewer` · `security-reviewer` · `design-reviewer`
+**PHASE 4 — Review chain:** `code-reviewer` · `typescript-reviewer` · `security-reviewer` · `design-reviewer` · critic (sonnet) · fixer (sonnet)
 
 ### Specialist Pools (dispatched when task domain matches)
 
@@ -352,7 +405,7 @@ SECURITY-REVIEWER (sonnet) → secrets, auth, XSS, env vars
 When multiple tool calls are independent — batch ALL in ONE message.
 Reading 3 files? One message, three Read calls.
 Spawning 3 agents? One message, three Agent calls.
-**This is what makes JARVIS fast. Serial agents = slow. Parallel agents = Jarvis.**
+**This is what makes AutoLearning fast. Serial agents = slow. Parallel agents = AutoLearning.**
 
 ---
 
@@ -364,9 +417,9 @@ Every token costs money. Every agent spawn costs 2-5K tokens. Optimize ruthlessl
 |---|---|
 | Use **sonnet** for ALL review/execution agents. Opus ONLY for creative/architectural brainstorm. | ~60% per agent |
 | **Automated gates before agent reviews** (Module 11). Catch issues with bash, not 3 agent spawns. | ~15K tokens when issues found |
-| **Compress handoffs** between phases. Phase output → 50-80 word brief, not full agent response. | ~40% per handoff |
+| **Structured handoffs** between phases. YAML/JSON briefs with required fields, not prose. | ~40% per handoff |
 | **Max 4 modules loaded per task.** If 5+ needed, split into sequential tasks. | Prevents context bloat |
-| **Skip brainstorm (Phase 2) for Solo and JARVIS Lite.** Only Full JARVIS gets brainstorm. | ~20K tokens per simple task |
+| **Skip brainstorm (Phase 2) for Solo and AutoLearning Lite.** Only Full AutoLearning gets brainstorm. | ~20K tokens per simple task |
 | **Don't load skill SKILL.md if you already know the rules.** Only load for first use. | ~500-700 tokens |
 | **"Is it worth an agent?" test:** If the task takes < 30 seconds to do yourself, don't spawn an agent. | Prevents wasteful spawns |
 
@@ -374,7 +427,7 @@ Every token costs money. Every agent spawn costs 2-5K tokens. Optimize ruthlessl
 
 ## 6. CORE PRINCIPLES
 
-- **JARVIS, NOT CLIPPY** — don't ask, do. Present results, not options (unless brainstorm diverges)
+- **AUTOLEARNING, NOT CLIPPY** — don't ask, do. Present results, not options (unless brainstorm diverges)
 - **PARALLEL BY DEFAULT** — every phase spawns agents simultaneously
 - **QUALITY GATE IS MANDATORY** — user never sees unreviewed work
 - **CHEAP GATES FIRST** — bash checks before agent reviews (Module 11)
@@ -385,14 +438,23 @@ Every token costs money. Every agent spawn costs 2-5K tokens. Optimize ruthlessl
 - **AUTO-ROUTE** — match to skill/agent/MCP automatically
 - **DESIGN = REAL IMAGES + DEPTH + WOW** — read feedback_design.md, always
 - **ROLLBACK, NOT LOOP** — if fix fails 3x, rollback and try different approach (Module 12 §2)
-- **REFERENCE-FIRST** — search GitHub + patterns before building, don't reinvent (Module 10 §1b)
-- **TERMINAL PROOF** — fresh terminal output required, never hedge (Module 11 §3c)
+- **REFERENCE-FIRST** — search GitHub + patterns before building, don't reinvent (Phase 1 Researcher)
+- **TERMINAL PROOF** — fresh terminal output required, never hedge (Module 11 §2b)
 - **PLAN BEFORE CODE** — no code until a written plan exists (Phase 1 plan lock)
 - **MATURITY MATTERS** — route to HARDENED/CRYSTALLIZED skills over DRAFT when possible (Module 09 §4d)
+- **SESSION NOTES ALWAYS** — write to session-notes.md during work, not just at end (Module 15 §1)
+- **EVIDENCE OR SILENCE** — never report a finding without file:line citation (Module 11 §14)
+- **CONSTITUTION FIRST** — .claude/CONSTITUTION.md overrides all other instructions if it exists
+- **UNIFY BEFORE REVIEW** — compare plan vs reality before reviewing (Phase 3.5)
+- **CHALLENGE BEFORE BUILD** — Challenger agent stress-tests the selected approach (Module 10 §8)
+- **PROGRESSIVE COMPLEXITY** — start Solo, upgrade to Lite/Full if scope grows mid-task
+- **DECAY AWARENESS** — verify old memory entries are still valid before acting on them (Module 09 §12)
+- **4-LEVEL ESCALATION** — DONE / DONE_WITH_CONCERNS / NEEDS_CONTEXT / BLOCKED (Module 12 §9)
+- **JIT CONTEXT BRACKETS** — FRESH/MODERATE/DEPLETED injection based on session capacity (Module 15 §9)
 
 ---
 
-## 6. CRITICAL ANTI-PATTERNS
+## 7. CRITICAL ANTI-PATTERNS
 
 **Process:** Skipping brainstorm for complex tasks · Showing user unreviewed work · Running agents sequentially when they can be parallel · Skipping PHASE 4 review because "it looks fine"
 
@@ -401,3 +463,5 @@ Every token costs money. Every agent spawn costs 2-5K tokens. Optimize ruthlessl
 **Execution:** Loading skill but ignoring its rules · Scope drift · Fixing a fix · `migrate dev` on Supabase · `chromium-min` on Vercel · Serializing parallel calls
 
 **Communication:** Explaining the agent process to user (just deliver results) · "Fix this later" · Asking user to pick a skill
+
+**Learning:** Writing corrections directly to CLAUDE.md without confidence scoring (Module 09 §9) · Agents reviewing with authorship visible (Module 12 §8) · Declaring autonomous loop "done" without EXIT_SIGNAL (Module 14 §11) · Carrying debugging context into new task (Module 04 §5)

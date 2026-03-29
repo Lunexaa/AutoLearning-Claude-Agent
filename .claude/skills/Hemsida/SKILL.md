@@ -606,8 +606,8 @@ export function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)) }
 
 # WORKFLOW GODMODE -- Subagents System
 
-> Subagents dispatched via JARVIS protocol. Each STEP spawns parallel subagents for independent tasks.
-> See JARVIS workflow skill for orchestration details.
+> Subagents dispatched via AutoLearning protocol. Each STEP spawns parallel subagents for independent tasks.
+> See Workflow skill for orchestration details.
 
 ### STEP Orchestration with Subagents
 

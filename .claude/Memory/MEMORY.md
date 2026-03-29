@@ -1,40 +1,61 @@
-# MEMORY INDEX — JARVIS v5.0 (5-Layer Architecture)
+# MEMORY INDEX — 3-TIER ARCHITECTURE
 
-> Memory is organized in 5 tiers. Lower layers = cheaper to access, higher layers = more persistent.
-
----
-
-## L1: CONVERSATIONAL (per-session, auto-cleared)
-*What's happening right now. Tasks in progress, current decisions.*
-Lives in context window — no files needed. Cleared each new session.
-
-## L2: WORKING (cross-session, per-project)
-*Active project state, recent decisions, in-progress work.*
-<!-- Add your project memory files here -->
-<!-- Example: - [project_myapp.md](project_myapp.md) — MyApp: stack, status, architecture -->
-
-## L3: VAULT (permanent, cross-project)
-*Who the user is, how they work, what they've decided. Never auto-deleted.*
-- [user_profile.md](user_profile.md) — User role, preferences, working style
-- [feedback_dev.md](feedback_dev.md) — Development workflow corrections
-- [feedback_communication.md](feedback_communication.md) — Communication preferences
-- [feedback_design.md](feedback_design.md) — Design quality standards
-
-## L4: EPISODIC (session logs, learnings)
-*What happened in past sessions. Patterns discovered. Mistakes made.*
-- [routing-signals.md](routing-signals.md) — Self-learning routing: skill/agent match scores
-- [routing-overrides.md](routing-overrides.md) — Learned route overrides from signal analysis
-
-## L5: SELF-HEALING (rules from failures)
-*Every mistake becomes a rule. Every rule prevents the same mistake.*
-<!-- Populates automatically as failures occur and lessons are extracted -->
+> Memory is organized in 3 tiers. Each tier serves a different purpose and retention horizon.
+> See Module 05 for details.
 
 ---
 
-## TIER RULES
+## TIER 1: WORKING (in-session, project-scoped)
 
-1. **Session start:** Read L3 (vault) + relevant L2 (working) + L4 routing-overrides. Max 3 files.
-2. **During session:** L1 is the context window. Don't load L3/L4 mid-task unless needed.
-3. **Session end:** Log routing signal to L4. If failure → extract rule to L5. Promote L1 insights to L2/L3.
-4. **Never:** Load all tiers at once. Read L5 only when routing or at session start.
-5. **Decay:** L4 signals older than 90 days get half weight. L2 project files updated when state changes.
+*Active project state and recent decisions you need RIGHT NOW.*
+
+- `project_[name].md` — Add project-specific memory files here as you work
+- `feedback_[project].md` — Project-specific feedback patterns
+- `session-notes.md` — Live memory written during work + pre-compaction capture (Module 15 §1)
+- `branches/[branch-name].md` — Branch-specific memory (Module 15 §6)
+
+---
+
+## TIER 2: VAULT (persistent, cross-project)
+
+*Rules, patterns, and user identity that apply ACROSS projects. Never auto-deleted.*
+
+- [user_profile.md](user_profile.md) — Who the user is, working style, preferences
+- [feedback_dev.md](feedback_dev.md) — Dev patterns and corrections (chromium-min→full, R2_PUBLIC_URL, root cause debugging)
+- [feedback_communication.md](feedback_communication.md) — Autonomous, brief, no summaries
+- [feedback_design.md](feedback_design.md) — Design standards: real images, depth, wow. No flat/2010.
+- [feedback_nextjs.md](feedback_nextjs.md) — Next.js patterns (App Router, next/image, Server vs Client Components)
+- [feedback_vercel.md](feedback_vercel.md) — Vercel deployment patterns (env vars, chromium, R2, edge functions)
+- `instincts.md` — Always-on behavioral rules (Module 15 §4). Max 15 instincts.
+
+---
+
+## TIER 3: SIGNALS (learning data, analyzed offline)
+
+*Routing intelligence and pattern discovery for future improvement.*
+
+- `routing-signals.md` — Task execution scores (skill match quality, first-try success per task)
+- `routing-overrides.md` — Learned route overrides discovered from signal analysis
+- Pattern mining outputs — Cross-project lessons, auto-generated instinct candidates (Module 09 §11)
+- Decay tracking — Memory re-verification schedule (Module 09 §12)
+
+---
+
+## ACCESS PATTERNS
+
+| Phase | Read | Write | Max load |
+|-------|------|-------|----------|
+| **Session start** | Tier 2 (vault) + relevant Tier 1 + Tier 3 overrides | — | 3 files |
+| **During work** | Tier 1 (continuous) + Tier 3 (on routing need) | Tier 1 (real-time) | HOT/WARM/COLD tiers (Module 15 §3) |
+| **Pre-compaction** | — | Tier 1 session-notes (via hook) | — |
+| **Session end** | — | Tier 3 signals + Tier 1→Tier 2 promotion | — |
+
+---
+
+## RULES
+
+1. **Tier 1 (WORKING):** Project-scoped, read at session start, written in real-time, archived when project complete.
+2. **Tier 2 (VAULT):** Global, loaded at every session, never auto-deleted, user manually archives obsolete entries.
+3. **Tier 3 (SIGNALS):** Used for routing decisions, analyzed at session end, older signals decay (Module 09 §12).
+4. **Cross-project promotion:** Entries in Tier 1 with `scope: cross-project` get promoted to Tier 2 at session end.
+5. **Token efficiency:** Use attention tiers (Module 15 §3) to avoid loading all files simultaneously.

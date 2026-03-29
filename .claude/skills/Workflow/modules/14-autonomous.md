@@ -6,7 +6,7 @@
 
 ## Purpose
 
-For large, well-defined tasks, JARVIS can operate autonomously — executing a full plan without human checkpoints at every step. This module defines safety limits, circuit breakers, and completion verification for autonomous execution.
+For large, well-defined tasks, AutoLearning can operate autonomously — executing a full plan without human checkpoints at every step. This module defines safety limits, circuit breakers, and completion verification for autonomous execution.
 
 **Key principle:** Autonomy is GRANTED, not assumed. User must explicitly opt in.
 
@@ -15,10 +15,10 @@ For large, well-defined tasks, JARVIS can operate autonomously — executing a f
 ## 1. ACTIVATION
 
 ### Explicit triggers (user must say one of these):
-- "run autonomous"
-- "build everything"
-- "I trust you, go"
-- "autonomous mode"
+- "kör autonomt" / "run autonomous"
+- "bygg allt" / "build everything"
+- "jag litar på dig, kör" / "I trust you, go"
+- "autonomous mode" / "autonom"
 
 ### Never auto-activate when:
 - Task is ambiguous or underspecified
@@ -36,11 +36,15 @@ Before entering autonomous mode, verify ALL:
 
 ```
 [ ] Task is clearly defined (specific deliverable, not vague goal)
-[ ] Plan exists (JARVIS Phase 1+2 completed, or user provided plan)
+[ ] Plan exists (AutoLearning Phase 1+2 completed, or user provided plan)
 [ ] Rollback available (git checkpoint created — Module 12 §2)
 [ ] Test suite exists (or task includes creating one)
 [ ] Scope is bounded (finite number of files/components)
 [ ] No destructive operations in plan
+[ ] Working tree is clean (no uncommitted changes — git status clean)
+[ ] Tests currently pass (if test suite exists — npm test exit 0)
+[ ] All dependencies installed (npm ci or yarn install succeeded)
+[ ] No pending git conflicts (git status shows no merge conflicts)
 ```
 
 **If any check fails:** Fall back to interactive mode. Explain why.
@@ -97,6 +101,11 @@ Autonomous mode STOPS immediately if ANY of these occur:
 | Token budget exceeded (>80K tokens in one autonomous run) | STOP — checkpoint and continue in new session |
 | Test suite goes from passing to 5+ failures | STOP — regression detected |
 | Agent spawn returns score < 2/5 twice | STOP — quality degradation |
+| npm install needed for new package | STOP — require user approval for new dependencies |
+| File deletion not in original plan | STOP — require user approval before deleting |
+| git merge/rebase conflict | STOP — rollback to last checkpoint |
+| Files modified > 2x original plan | STOP — scope explosion detected |
+| Single iteration creates > 3 new files | STOP — exponential generation detected |
 
 **When stopped:** Present user with:
 1. What was completed (with file list)
@@ -163,12 +172,12 @@ Autonomous mode must NEVER:
 
 ---
 
-## 8. INTEGRATION WITH JARVIS
+## 8. INTEGRATION WITH AutoLearning
 
 | Scenario | How autonomous mode works |
 |---|---|
-| Full JARVIS (10+ files) | Phase 1+2 interactive → Phase 3 autonomous → Phase 4+5 interactive |
-| JARVIS Lite (4-10 files) | Phase 1 interactive → Phase 3 autonomous → Phase 4 interactive |
+| Full AutoLearning (10+ files) | Phase 1+2 interactive → Phase 3 autonomous → Phase 4+5 interactive |
+| AutoLearning Lite (4-10 files) | Phase 1 interactive → Phase 3 autonomous → Phase 4 interactive |
 | Solo (≤3 files) | Not worth autonomous mode — just do it |
 | Multi-sprint project | Each sprint can have autonomous Phase 3 |
 
@@ -199,3 +208,87 @@ Autonomous mode must NEVER:
 - **Never force-push or deploy autonomously** — local commits only
 - **Never exceed scope** — scope creep in autonomous mode is dangerous
 - **Never retry the same failing approach** — 3 strikes = stop and ask
+
+---
+
+## 11. DUAL-CONDITION EXIT GATE
+
+The autonomous execution loop MUST NOT exit based on a single signal. Two independent conditions must BOTH be true.
+
+**Condition 1: Completion indicators**
+- All plan items marked done
+- Build passes (exit code 0)
+- Tests pass (exit code 0)
+- No TODO/FIXME left in new code
+
+**Condition 2: Explicit EXIT_SIGNAL**
+- Agent must emit the literal string `EXIT_SIGNAL:COMPLETE` in its output
+- This is a deliberate, conscious declaration — not just "I'm done"
+
+**Logic:**
+```
+IF completion_indicators AND exit_signal_present:
+  → EXIT loop (truly done)
+ELIF completion_indicators BUT NOT exit_signal:
+  → CONTINUE (agent may be confused about what "done" means)
+ELIF exit_signal BUT NOT completion_indicators:
+  → CONTINUE (agent declared done but work remains)
+ELSE:
+  → CONTINUE (still working)
+```
+
+**Why both:** An agent saying "done" is unreliable — it may have skipped items or misunderstood scope. Completion indicators alone can false-positive when a partial build passes. Requiring both eliminates false terminations.
+
+**Anti-pattern:** Never allow the loop to exit on "I believe this is complete" without the EXIT_SIGNAL token.
+
+---
+
+## 12. POST-PR SELF-REFLECTION
+
+After each commit or merge during autonomous execution, run a reflection step.
+
+**Reflection process:**
+1. Read the diff (`git diff HEAD~1`)
+2. Extract:
+   - What patterns worked well (reuse these)
+   - What caused friction (avoid these)
+   - What took more iterations than expected (flag for skill improvement)
+3. Append findings to `routing-signals.md`:
+   ```
+   ## Reflection — [YYYY-MM-DD] — [commit SHA short]
+   - **Worked:** [pattern that succeeded]
+   - **Friction:** [what was harder than expected]
+   - **Lesson:** [one-sentence actionable takeaway]
+   ```
+4. If the same friction pattern appears 3+ times across reflections:
+   - Propose a new instinct (Module 15 §4)
+   - Present to user: "Recurring pattern detected: [X]. Add as instinct?"
+
+**Budget:** Max 1K tokens per reflection. Keep it concise — this is a log, not an essay.
+
+**Rules:**
+- Reflection runs AFTER successful commit, not after failed attempts
+- Skip reflection if the commit is trivial (< 5 lines changed)
+- Never block the autonomous loop for reflection — it runs inline
+- Reflection findings feed into Module 09 learning at session end
+
+---
+
+## 13. TASK-TYPE-SPECIFIC GATES
+
+Different task types have different failure modes. Apply extra gates based on what's being built.
+
+| Task type | Autonomous? | Extra verification |
+|-----------|------------|-------------------|
+| UI component build | YES | Smoke test: dev server + homepage loads |
+| API endpoint | YES | Endpoint responds with correct status code |
+| Database schema change | NO | Always require human approval before migrate |
+| Refactor (no new features) | YES | Benchmark before/after (no performance regression) |
+| New dependency addition | NO | Always require human approval |
+| Config/env changes | YES | Service starts successfully with new config |
+| Auth/security/payment code | NO | Always require human review |
+| Test suite creation | YES | All new tests pass + no existing test regressions |
+
+**Detection:** Infer task type from the plan (Phase 1 output). If plan mentions "migrate", "schema", "auth", "payment" → apply NO-autonomous gate.
+
+**Rule:** When in doubt about task type, treat as NO-autonomous. Safety > speed.

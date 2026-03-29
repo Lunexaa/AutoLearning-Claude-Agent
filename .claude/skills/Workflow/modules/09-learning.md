@@ -6,7 +6,7 @@
 
 ## Purpose
 
-JARVIS starts static — tasks match skills/agents by description. This module makes it ADAPTIVE:
+AutoLearning starts static — tasks match skills/agents by description. This module makes it ADAPTIVE:
 1. **Routing learning** — better skill/agent matching over time
 2. **Skill evolution** — skills auto-improve from execution outcomes
 3. **Quality tracking** — skills below threshold get flagged/deprecated
@@ -241,3 +241,183 @@ Step 7: Update routing-overrides.md and skill files if needed
 - **Decay old signals** — older than 90 days get half weight
 - **User feedback overrides everything** — explicit "use X" = 5/5 signal
 - **Don't over-evolve** — max 1 evolution append per skill per week
+
+---
+
+## 9. CONFIDENCE-SCORED FEEDBACK ENTRIES
+
+Corrections and learnings are written directly to feedback_*.md files with confidence tags.
+
+**Storage:** `~/.claude/Memory/feedback_*.md` (organized by topic)
+
+**Entry format:**
+```markdown
+- **Pattern:** [what was wrong → what's right]
+- **Confidence:** [0.0-1.0]
+- **Source:** [user correction | discovered pattern | repeated failure]
+- **Added:** [YYYY-MM-DD]
+```
+
+**Confidence scoring:**
+
+| Score | Action | Criteria |
+|-------|--------|----------|
+| 0.9-1.0 | Immediate action | User explicitly said "always do X" or "never do Y" |
+| 0.7-0.89 | Strong pattern from 2+ occurrences | Reliable enough to apply |
+| 0.5-0.69 | Needs more evidence | Single instance, plausible but unconfirmed |
+| < 0.5 | Discard | Likely noise, one-off situation |
+
+**Rules:**
+- Write high-confidence entries (≥0.7) immediately to feedback files
+- Low-confidence entries stay in session-notes until confidence increases (via Module 15 §1)
+- Merge duplicate entries — reference previous entry if pattern repeats
+- Archive entries older than 180 days if confidence drops below threshold
+- Feedback files are Tier 2 VAULT — permanent cross-project knowledge
+
+---
+
+## 10. SKILL REGRESSION TESTING
+
+Skills can define test tasks in their SKILL.md. Editing a skill that drops its score = regression.
+
+**Test task format (in any skill's SKILL.md):**
+```markdown
+---
+## Test Task
+**Input:** Build a simple login form with email and password validation.
+**Expected output:** Form component with Zod schema, error messages, accessible labels.
+**Rubric:**
+  - Zod schema present and correct (0-2 points)
+  - Error messages user-friendly (0-1 point)
+  - Accessibility (labels, ARIA) (0-1 point)
+  - No TypeScript errors (0-1 point)
+**Passing score:** 4/5
+```
+
+**Testing workflow (/skill-test [name]):**
+1. Load the skill
+2. Execute the test task
+3. Score output against rubric (each criterion 0-N points)
+4. Compare to previous score (stored in routing-signals.md)
+5. Report:
+   - Score: [N/total]
+   - Previous: [N/total]
+   - Delta: [+/- N]
+   - Status: PASS / REGRESSION / IMPROVEMENT
+
+**Regression handling:**
+
+| Delta | Status | Action |
+|-------|--------|--------|
+| +1 or more | IMPROVEMENT | Log positive signal, update maturity stage if applicable |
+| 0 | STABLE | No action |
+| -1 | MINOR REGRESSION | Warn — review recent changes to the skill |
+| -2 or more | MAJOR REGRESSION | Block — revert skill changes until investigated |
+
+**Integration with Module 09 §4 (Skill Maturity Lifecycle):**
+- Test scores feed directly into maturity stage calculations
+- A skill cannot advance from TESTED to HARDENED without 3+ passing test runs
+- A HARDENED skill that regresses is demoted back to TESTED
+
+**Rules:**
+- Test tasks are OPTIONAL — not every skill needs one
+- Skills with test tasks get higher routing priority (more trustworthy)
+- Test runs are logged in routing-signals.md alongside regular execution signals
+- Never auto-run tests on official skills (Anthropic, Trail of Bits) — manual only
+
+---
+
+## 11. PATTERN MINING
+
+Periodically analyze routing-signals.md to find recurring patterns across sessions.
+
+**Trigger:** Every 10 new signals, or manually via session end review.
+
+**Process:**
+1. Extract all lesson fields from routing-signals.md
+2. Group similar lessons by topic (design, testing, environment, dependencies)
+3. Find clusters with 3+ occurrences
+4. For each cluster:
+   - Show contributing tasks (dates, contexts)
+   - Suggest action: new instinct? new feedback entry? new skill?
+   - Confidence: (occurrences / total signals) × 100
+
+**Output format:**
+```markdown
+## Pattern: [topic] — [N]x occurrences
+- Tasks: [list of dates + summaries]
+- Lesson: [common thread]
+- Action: [propose instinct | feedback entry | skill creation]
+- Confidence: [N]%
+```
+
+**Auto-promote:** If pattern confidence > 70% AND occurrences >= 3:
+→ Auto-create instinct candidate in instincts.md with [CANDIDATE] tag
+→ Present to user at session end: "New pattern detected. Add as instinct?"
+
+**Integration:** Feeds into Module 15 §4 (Instincts) for auto-generation.
+
+---
+
+## 12. MEMORY DECAY & RE-VERIFICATION
+
+Old rules may become obsolete. Verify them periodically.
+
+**Decay schedule:**
+
+| Entry type | Re-verify every | Risk |
+|-----------|----------------|------|
+| Environment-specific (Vercel, Supabase) | 60 days | HIGH — APIs change |
+| Framework patterns (Next.js, Prisma) | 90 days | MEDIUM — major versions |
+| General development rules | 180 days | LOW — stable patterns |
+| Design standards | 120 days | MEDIUM — trends shift |
+
+**At session start (lightweight check):**
+1. Scan feedback_*.md for entries older than their decay threshold
+2. If found: flag for re-verification
+3. Present: "These rules haven't been verified recently: [list]. Still valid?"
+4. User confirms → update verification date
+5. User says obsolete → archive the entry
+
+**Verification format (append to each entry):**
+```
+- **Last verified:** [YYYY-MM-DD]
+- **Next verify:** [YYYY-MM-DD]
+```
+
+**Rule:** Never auto-delete entries. Always ask user. Decay is verification, not deletion.
+
+---
+
+## 13. AUTOMATED OUTCOME SIGNALS
+
+Replace manual 1-5 scoring with automated signals that don't depend on human discipline.
+
+**Automatic signal sources:**
+
+| Event | Signal | Score equivalent |
+|-------|--------|-----------------|
+| `npm run build` exits 0 | BUILD_PASS | +1 |
+| `npm run build` fails | BUILD_FAIL | -2 |
+| `npm test` — 0 new failures | TESTS_PASS | +1 |
+| `npm test` — new failures introduced | TESTS_REGRESS | -2 |
+| User re-runs same task within 5 min | TASK_REDO | -1 (output was wrong) |
+| User says "perfect" / "great" / accepts without changes | USER_ACCEPT | +2 |
+| User says "no" / "wrong" / corrects | USER_REJECT | -1 |
+| Phase 4 quality gate passes first try | GATE_CLEAN | +1 |
+| Phase 4 quality gate fails 2+ times | GATE_STRUGGLE | -1 |
+| Autonomous mode completes without circuit breaker | AUTO_CLEAN | +2 |
+| Circuit breaker triggered | AUTO_BREAK | -1 |
+
+**Aggregate scoring:**
+- Sum all signals per task → total score
+- Map: ≥4 = excellent (5/5), 2-3 = good (4/5), 0-1 = ok (3/5), -1 to -2 = poor (2/5), ≤-3 = bad (1/5)
+
+**Implementation:** At session end, check:
+1. Git log for build/test outcomes (automated, 0 tokens)
+2. Conversation for user sentiment keywords (automated, 0 tokens)
+3. Log aggregate score to routing-signals.md
+
+**Why automated > manual:** Manual scores are skipped under time pressure. Automated signals capture EVERY task, even when the developer forgets to score.
+
+**Integration:** Feeds into Module 09 §4 (Skill Maturity) and §11 (Pattern Mining).

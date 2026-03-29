@@ -63,10 +63,10 @@ Memory context:
 - ~/.claude/Memory/feedback_dev.md
 - ~/.claude/Memory/feedback_communication.md
 - ~/.claude/Memory/project_[current].md
-- ~/.claude/Memory/feedback_project.md (your-project only)
+- ~/.claude/Memory/feedback_[project].md (project-specific, if exists)
 
 Stack constraints:
-Next.js 16.2.1+ (your-project) / Next.js 14 (your-project)
+Next.js 14+ (check project's package.json for exact version)
 Prisma: db push NEVER migrate dev. Build: prisma generate && next build
 Supabase: port 6543, pgbouncer=true, connection_limit=1
 Cloudflare DNS: grey cloud only. R2_PUBLIC_URL must be set.

@@ -1,6 +1,6 @@
 ---
 name: design-reviewer
-description: "Visual quality gate — reviews built UI against design standards. Dispatched in PHASE 4 of JARVIS protocol. Checks for real images, visual depth, wow factor, symmetry, and branded footer."
+description: "Visual quality gate — reviews built UI against design standards. Dispatched in PHASE 4 of AutoLearning protocol. Checks for real images, visual depth, wow factor, symmetry, and branded footer."
 tools: ["Read", "Grep", "Glob", "Bash"]
 model: sonnet
 ---

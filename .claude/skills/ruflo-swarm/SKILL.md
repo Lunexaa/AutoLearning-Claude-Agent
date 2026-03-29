@@ -75,8 +75,7 @@ ruflo delegate [agent-id] "$(cat ~/.claude/Memory/feedback_dev.md) --- TASK: [yo
 
 **Required memory files to inject per task type:**
 - All tasks: `feedback_dev.md` + `feedback_communication.md`
-- your-project: + `project_konsaros.md` + `feedback_project.md`
-- your-project: + `project_zenitcrm.md`
+- project-specific: + `project_[name].md` + `feedback_[project].md` (if they exist)
 
 ---
 

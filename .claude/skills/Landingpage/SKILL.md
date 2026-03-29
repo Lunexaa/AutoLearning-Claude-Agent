@@ -676,7 +676,7 @@ Hero -> Trust -> Problem -> Solution -> Features -> Proof -> CTA
 
 ## WORKFLOW GODMODE -- Subagents System
 
-Subagents dispatched via JARVIS protocol Phase 4 review chain.
+Subagents dispatched via AutoLearning protocol Phase 4 review chain.
 
 ### Orchestration Overview
 
