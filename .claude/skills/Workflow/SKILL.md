@@ -1,6 +1,6 @@
 ---
 name: workflow
-description: AutoLearning Claude Agent — autonomous multi-agent system with self-learning routing, 6 brainstorm modes, 10 automated quality gates, pattern mining, and session intelligence. 533 skills, 310 agents, 15 modules, 7 MCP servers.
+description: AutoLearning Claude Agent — autonomous multi-agent system with self-learning routing, 6 brainstorm modes, 10 automated quality gates, pattern mining, and session intelligence. 534 skills, 310 agents, 16 modules, 7 MCP servers.
 ---
 
 # AUTOLEARNING CLAUDE AGENT
@@ -62,6 +62,7 @@ Same as before — load ONLY what the task requires.
 | **Session start** | `modules/04-session.md` (selective knowledge priming) + Module 15 §4-§6 (recall, branch memory, theory) |
 | **BUILD / BUG / URGENT** | `modules/01-planning.md` + `modules/02-execution.md` + `modules/03-verification.md` |
 | **BUILD with brainstorm** | + `modules/10-brainstorm.md` (reference-first + brainstorm modes A-D) |
+| **BUILD with stale knowledge** | + `modules/16-staleness-research.md` (last30days conditional refresh) |
 | **BUILD with UI** | + `modules/11-quality-gates.md` (8 automated gates incl. TDD + terminal verify) |
 | **Full AutoLearning (10+ files)** | + `modules/12-orchestration.md` (progress, rollback, handoff, hot-swap) |
 | **Autonomous execution** | + `modules/14-autonomous.md` (ralph loop, safety limits, circuit breakers) |
@@ -139,10 +140,13 @@ Read ROADMAP.md → find matching skill → load it.
 | **MARKETING** | | |
 | Marketing/ads/CRO | `marketing` (→ sub-skill) | — |
 | SEO | `seo` or specific `seo-*` | — |
+| **RESEARCH** | | |
+| Topic research (last 30 days) | `last30days` | — |
+| Stale knowledge refresh | `last30days` + `modules/16-staleness-research.md` | — |
+| Deep research | `deep-research` + `modules/13-deep-research.md` | — |
 | **AUTOMATION** | | |
 | n8n workflows | `n8n-automation` (→ sub-skill) | — |
 | Complex planning | `planning-with-files` | `planner` |
-| Deep research | `deep-research` + `modules/13-deep-research.md` | — |
 | Codebase onboarding | `codebase-onboarding` | — |
 
 ### Step 2b: SKILL COMPLIANCE GATE
@@ -156,8 +160,8 @@ Skills with hard structural requirements:
 
 | Skill | MUST follow |
 |---|---|
-| `Landingpage` | Golden Folder, NO MONOLITH, `/content/`, BrandedFooter, 8-step flow, design quality standard |
-| `Hemsida` | Golden Folder, NO MONOLITH, BrandedFooter on ALL pages, 9-step flow, design quality standard |
+| `Landingpage` | Golden Folder, NO MONOLITH, `/content/`, ZenitCredit, 8-step flow, design quality standard |
+| `Hemsida` | Golden Folder, NO MONOLITH, ZenitCredit on ALL pages, 9-step flow, design quality standard |
 | `frontend-design` | Anti-AI-slop, bold direction, real images, no Inter/purple |
 | `shadcn-blocks` | Check catalog before building custom |
 | `nextjs-crm` | Prisma+Supabase, RLS, AES-256-GCM |
@@ -208,7 +212,48 @@ Agent 3: CONTEXT LOADER
   "Read project memory files + recent git history. Return:
    relevant decisions, patterns used, gotchas specific to
    this project."
+
+Agent 4: FRESHNESS RESEARCHER (conditional — see below)
+  Only spawned when Module 16 staleness check triggers.
+  Runs last30days to refresh knowledge from 8 real-time sources.
 ```
+
+**Staleness-Conditioned Research (Module 16) — MANDATORY CHECK:**
+Before spawning PHASE 1 agents, you MUST run this staleness check. This is not optional.
+
+**Step 1: Run freshness check** (one Bash call):
+```bash
+# Check freshness tracker + memory file ages
+echo "=== STALENESS CHECK ===" && \
+cat ~/.claude/Memory/.freshness-tracker 2>/dev/null || echo "No tracker yet" && \
+for f in ~/.claude/Memory/feedback_*.md ~/.claude/Memory/project_*.md; do \
+  [ -f "$f" ] && echo "$(basename $f): $(stat -f '%Sm' -t '%Y-%m-%d' "$f" 2>/dev/null)"; \
+done
+```
+
+**Step 2: Decide based on output:**
+- If relevant memory file modified < 14 days ago → **SKIP** research (use existing knowledge)
+- If 15-29 days → **FLAG** in Phase 2: "Knowledge may be slightly outdated"
+- If 30+ days OR `NEW_PROJECT` intent OR `last_researched: never` in tracker → **SPAWN Agent 4:**
+  ```
+  Agent 4: FRESHNESS RESEARCHER (sonnet, foreground)
+    "Run: python3 ~/.claude/skills/last30days/scripts/last30days.py '{domain} best practices {year}' --emit=compact --store --quick
+     Then WebSearch 2-3 supplementary queries.
+     Return structured brief: top 5 patterns, what changed, deprecated approaches, new tools."
+  ```
+
+**Step 3: After research completes**, update the freshness tracker:
+```bash
+# Update last_researched date in tracker
+sed -i '' "s|^PROJECT|DOMAIN|[^|]*|[^|]*|PROJECT|DOMAIN|$(date +%Y-%m-%d)|$(date +%Y-%m-%d)|" ~/.claude/Memory/.freshness-tracker
+```
+
+**Step 4: If research found newer facts than matched skill** → APPEND findings to the skill's SKILL.md.
+See `modules/16-staleness-research.md` §5b for exact format and rules.
+Never rewrite — only append. Never update official skills — only custom.
+
+Output injected into Phase 2 constraint injection.
+See `modules/16-staleness-research.md` for domain-specific query table.
 
 **Reference-First** (for BUILD tasks): The RESEARCHER agent (above) now includes reference search:
 - GitHub: 3+ high-quality repos matching task type
@@ -228,16 +273,20 @@ Agent 3: CONTEXT LOADER
 
 ### PHASE 2: BRAINSTORM → load `modules/10-brainstorm.md`
 
-| Task type | Mode | Agents | Detail |
-|---|---|---|---|
-| Backend/API/DB | **Mode A: Standard** | 4 | Architect + Creative + Pragmatist + User Advocate |
-| UI task ≤5 files | **Mode B-Lite: Design Duet** | 3 | Minimalist + Conversion Hawk + User Advocate |
-| UI/website/design 5+ files | **Mode B: Design Tribunal** | 8 | 6 design + Accessibility + User Advocate |
-| Backend architecture | **Mode C: Backend Tribunal** | 6 | Scale + Security + DX + Cost + Red Team + User Advocate |
-| Spec/PRD/design doc | **Mode D: Adversarial Spec** | 3 | Author + Critic + Defender |
-| Mobile/Data/API/Security | **Mode E: Domain-Specific** | 3 | Specialized per domain |
+**MANDATORY:** Spawn agents using `subagent_type` matching these agent file names. ALL agents exist in `~/.claude/agents/`.
 
-All modes include: **User Advocate** (end-user perspective agent), **Constraint Injection** (hard limits injected into every prompt), **Challenger** (post-selection stress test — replaces Devil's Advocate + Falsification).
+| Task type | Mode | Agents (subagent_type values) |
+|---|---|---|
+| Backend/API/DB | **Mode A** | `architect` (opus) + `creative` (opus) + `pragmatist` (sonnet) + `user-advocate` (sonnet) |
+| UI task ≤5 files | **Mode B-Lite** | `minimalist` (sonnet) + `conversion-hawk` (sonnet) + `user-advocate` (sonnet) |
+| UI/website 5+ files | **Mode B** | `minimalist` + `brutalist` + `luxury` + `conversion-hawk` + `trend-scout` + `accessibility-advocate` + `red-team` + `user-advocate` |
+| Backend architecture | **Mode C** | `scale-architect` (opus) + `security-hawk` + `dx-advocate` + `cost-optimizer` + `red-team` + `user-advocate` |
+| Spec/PRD/design doc | **Mode D** | `spec-author` (opus) + `spec-critic` (sonnet) + `spec-defender` (sonnet) |
+| Mobile | **Mode E** | `domain-mobile` (sonnet) + `user-advocate` + `pragmatist` |
+
+**After brainstorm:** Spawn `challenger` (sonnet) to stress-test the winning approach across 5 dimensions.
+
+All modes include: **Constraint Injection** (inject staleness flags from PHASE 1 + hard limits into every agent prompt).
 Judge uses weighted scoring rubric (Impact 40%, Uniqueness 25%, Feasibility 20%, Conversion 15%) — never picks one approach wholesale.
 
 ### PHASE 3: BUILD (parallel specialists)
@@ -353,16 +402,38 @@ Skip for: Solo, AutoLearning Lite
 3. Auto-generate changelog entry: `git log --oneline [start]..HEAD`
 4. Suggest version bump if package.json exists (PATCH/MINOR/MAJOR)
 5. No summaries of internal process — user doesn't need to know agents worked on this
-6. Log learnings to session-notes.md + routing-signals.md
 
-### PHASE 5.5: LESSONS LEARNED (Full AutoLearning only)
+### PHASE 5.5: LEARNING CAPTURE (MANDATORY — not optional, runs every time)
 
-After delivery, capture what was learned:
-1. Compare planned scope vs actual scope
-2. What took longer than expected? What patterns worked?
-3. Update routing-signals.md with skill scores
-4. If friction pattern appears 3+ times → propose new instinct (Module 15 §3 Instincts)
-5. If same lesson appears in 2+ projects → promote to Tier 2 VAULT feedback file
+**This step is not automated by hooks.** You MUST execute these steps after every BUILD/BUG task:
+
+**Step 1: Log routing signal** (always — takes 5 seconds):
+```
+Append to ~/.claude/Memory/routing-signals.md:
+
+## [DATE] — [TASK SUMMARY] ([PROJECT])
+- **Skill:** [matched skill] | Score: [1-5] | First-try success: [yes/no]
+- **Agents used:** [list] | Score: [1-5]
+- **User feedback:** [positive/negative/neutral]
+- **Lesson:** [one sentence — what to do differently next time]
+```
+
+**Step 2: Update freshness tracker** (always):
+```bash
+# Update last_worked date for this domain
+grep -q "^PROJECT|DOMAIN|" ~/.claude/Memory/.freshness-tracker 2>/dev/null && \
+  sed -i '' "s#^PROJECT|DOMAIN|.*#PROJECT|DOMAIN|$(date +%Y-%m-%d)|LAST_RESEARCHED#" ~/.claude/Memory/.freshness-tracker || \
+  echo "PROJECT|DOMAIN|$(date +%Y-%m-%d)|never" >> ~/.claude/Memory/.freshness-tracker
+```
+
+**Step 3: Check for pattern promotion** (if 5+ signals exist):
+- Read routing-signals.md
+- If same lesson appears 3+ times → append to `~/.claude/Memory/instincts.md` as `[CANDIDATE]`
+- If same lesson in 2+ projects → promote to `feedback_*.md` (Tier 2 VAULT)
+
+**Step 4: If new skill was created during this task** → add one-line entry to `~/.claude/ROADMAP.md` in correct category
+
+**Why this matters:** Without this step, the system never learns. Hooks capture raw data, but YOU must do the analysis. Skip this = static system. Do this = adaptive system.
 
 ---
 
@@ -458,7 +529,7 @@ Every token costs money. Every agent spawn costs 2-5K tokens. Optimize ruthlessl
 
 **Process:** Skipping brainstorm for complex tasks · Showing user unreviewed work · Running agents sequentially when they can be parallel · Skipping PHASE 4 review because "it looks fine"
 
-**Design:** Flat placeholder UI · Emojis as images · Inter/Roboto · Purple gradients · Rounded-everything · Missing branded footer · Not verifying image URLs
+**Design:** Flat placeholder UI · Emojis as images · Inter/Roboto · Purple gradients · Rounded-everything · Missing Zenit footer · Not verifying image URLs
 
 **Execution:** Loading skill but ignoring its rules · Scope drift · Fixing a fix · `migrate dev` on Supabase · `chromium-min` on Vercel · Serializing parallel calls
 

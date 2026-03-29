@@ -98,7 +98,7 @@ Every session generates knowledge. Capture it systematically, not just when you 
 - Task-specific details with no future value
 
 ### Memory hygiene (run monthly or when routing-signals.md > 50 entries):
-1. Archive signals older than 90 days (move to `routing-signals-archive.md`)
+1. Archive signals older than 90 days (move old entries to bottom of routing-signals.md under `## Archive` heading)
 2. Promote any lesson that appears 3+ times to permanent `feedback_*.md`
 3. Remove contradictory entries (keep the most recent)
 4. Verify memory file references still point to existing files
@@ -166,8 +166,8 @@ When completing one task and starting another in the same session, actively rese
 6. Begin the new task as if it's a fresh session
 
 **What to carry forward:**
-- Instincts (always active — Module 15 §4)
-- Project-level knowledge (THEORY.md, branch memory)
+- Instincts (always active — Module 15 §3)
+- Project-level knowledge (branch memory, project_*.md)
 - Napkin entries (they're always relevant)
 
 **What to drop:**

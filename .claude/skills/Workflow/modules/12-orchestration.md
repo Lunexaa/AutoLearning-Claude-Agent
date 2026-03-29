@@ -130,7 +130,7 @@ If an agent returns low-quality output (< 2/5 score or clearly off-topic):
 If an AutoLearning run spans multiple sessions (context limit hit), write state:
 
 ```markdown
-<!-- tasks/autolearning-state.md -->
+<!-- AutoLearning state metadata (saved in tasks/todo.md) -->
 ## AutoLearning State — [timestamp]
 - **Task:** [original user request]
 - **Current phase:** PHASE [N]
@@ -142,7 +142,7 @@ If an AutoLearning run spans multiple sessions (context limit hit), write state:
 - **Rollback available:** [yes/no, branch ref]
 ```
 
-**Next session:** Module 04 (session.md) checks for `tasks/autolearning-state.md` → resumes from the correct phase, not from scratch.
+**Next session:** Module 04 (session.md) checks for `tasks/todo.md` with AutoLearning state metadata → resumes from the correct phase, not from scratch.
 
 **HARD RULE:** Never re-run completed phases. If Phase 1+2 are done and state is saved, next session starts at Phase 3.
 

@@ -1,7 +1,7 @@
 # SKILL ROADMAP — AutoLearning Claude Agent
 Last updated: 2026-03-28
 
-> **533 skills installed.** Du behöver inte läsa denna fil — AutoLearning auto-matchar skills via deras `description` i frontmatter.
+> **535 skills installed.** Du behöver inte läsa denna fil — AutoLearning auto-matchar skills via deras `description` i frontmatter.
 > Denna ROADMAP finns för: (1) manuell sökning om auto-match missar, (2) förstå vad som finns, (3) uppdatering vid nya skills.
 
 ---
@@ -12,11 +12,11 @@ Claude Code läser varje skills `description` fält automatiskt. När du ger en 
 
 ---
 
-## CATEGORY INDEX (533 skills, 310 agents, 15 modules, 12 commands, 7 MCP)
+## CATEGORY INDEX (535 skills, 331 agents, 16 modules, 15 commands, 7 MCP)
 
-### WORKFLOW & PROCESS (8 skills)
-Core workflow, planning, verification, context management.
-**Key:** `workflow` (AutoLearning Claude Agent — 15 modules: planning, execution, verification, session, memory, PM, self-monitor, skills, learning+maturity, brainstorm+reference-first+adversarial-spec, quality-gates+TDD+terminal-verify, orchestration, deep-research, autonomous-mode, session-intelligence) · `planning-with-files` · `context-budget` · `verification-loop` · `verification-before-completion` · `strategic-compact` · `continuous-learning-v2` · `agentic-engineering`
+### WORKFLOW & PROCESS (9 skills)
+Core workflow, planning, verification, context management, research.
+**Key:** `workflow` (AutoLearning Claude Agent — 16 modules: planning, execution, verification, session, memory, PM, self-monitor, skills, learning+maturity, brainstorm+reference-first+adversarial-spec, quality-gates+TDD+terminal-verify, orchestration, deep-research, autonomous-mode, session-intelligence, staleness-research) · `planning-with-files` · `context-budget` · `verification-loop` · `verification-before-completion` · `strategic-compact` · `continuous-learning-v2` · `agentic-engineering` · `last30days` (staleness-conditioned multi-source research: Reddit, X, YouTube, HN, Polymarket, web — auto-triggered when memory >30 days old)
 
 ### FRONTEND & UI (35+ skills)
 React, Next.js, Tailwind, shadcn, animation, design systems, responsive, performance.

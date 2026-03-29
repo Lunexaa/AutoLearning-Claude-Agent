@@ -4,7 +4,23 @@
       "~/.claude/skills"
     ]
   },
-  "effortLevel": "high",
+  "effortLevel": "max",
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "Agent(*)",
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "TodoWrite(*)",
+      "NotebookEdit(*)"
+    ],
+    "deny": []
+  },
   "hooks": {
     "PreToolUse": [
       {
@@ -13,6 +29,26 @@
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/tdd-gate.sh 2>/dev/null || echo 'TDD: ensure tests exist for new functionality'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/session-end-signal.sh 2>/dev/null; exit 0"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/skill-learning-capture.sh 2>/dev/null; exit 0"
           }
         ]
       }

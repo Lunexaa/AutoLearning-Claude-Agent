@@ -1,6 +1,24 @@
-# Don't track user-specific memory content
-.claude/Memory/L2-working/
-.claude/Memory/L5-self-healing/
-*.local
+# User-specific memory content (never commit personal data)
+.claude/Memory/project_*.md
+.claude/Memory/feedback_*.md
+.claude/Memory/user_profile.md
+.claude/Memory/session-notes.md
+.claude/Memory/diary.md
+.claude/Memory/learning-queue.md
+.claude/Memory/routing-signals.md
+.claude/Memory/routing-overrides.md
+.claude/Memory/instincts.md
+.claude/Memory/.freshness-tracker
+.claude/Memory/branches/
+
+# OS files
 .DS_Store
+*.local
+Thumbs.db
+
+# Dependencies
 node_modules/
+
+# Build artifacts
+dist/
+.next/

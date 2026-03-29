@@ -22,7 +22,7 @@ Memory is organized into three tiers. Each tier serves a different time horizon 
 **Files:**
 - `project_*.md` — Stack, status, key technical decisions for a project
 - `session-notes.md` — Live memory written during work + pre-compaction capture (Module 15 §1)
-- Branch memory in `branches/[branch-name].md` (Module 15 §6)
+- Branch memory in `branches/[branch-name].md` (Module 15 §5)
 
 **Access:** Loaded at session start for the active project.
 
@@ -33,7 +33,7 @@ Memory is organized into three tiers. Each tier serves a different time horizon 
 **Files:**
 - `user_profile.md` — Who you are, your working style, preferences
 - `feedback_*.md` — Dev patterns, design standards, token efficiency, communication style
-- `instincts.md` — Behavioral rules that fire on pattern recognition (Module 15 §4)
+- `instincts.md` — Behavioral rules that fire on pattern recognition (Module 15 §3)
 
 **Access:** Loaded at session start, always.
 

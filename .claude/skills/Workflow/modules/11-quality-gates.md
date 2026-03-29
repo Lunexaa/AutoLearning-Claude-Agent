@@ -46,7 +46,7 @@ Dispatch `karen` agent (or run inline):
 ```
 "Review what was asked vs what was built. Check:
  - Every requirement mentioned by user: implemented?
- - Branded footer: present? (if Landingpage/Hemsida skill active)
+ - Zenit Group footer: present? (if Landingpage/Hemsida skill active)
  - Content separation: all text in /content/? (if required by skill)
  - Functions work end-to-end, not just exist?
  Report: COMPLETE / INCOMPLETE with specific gaps."
